@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Matteo · Strava × Firenze Marathon</title>
+<!-- PWA -->
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#FC4C02">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="M×Firenze">
+<link rel="apple-touch-icon" href="./icons/icon-192.svg">
+<link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --orange:#FC4C02;--orange-d:rgba(252,76,2,.08);
+  --green:#15803d;--green-d:rgba(21,128,61,.1);
+  --blue:#1d4ed8;--blue-d:rgba(29,78,216,.1);
+  --amber:#b45309;--amber-d:rgba(180,83,9,.1);
+  --red:#b91c1c;--red-d:rgba(185,28,28,.1);
+  --purple:#6d28d9;--purple-d:rgba(109,40,217,.1);
+  --teal:#0f766e;--teal-d:rgba(15,118,110,.1);
+  --bg:#f7f6f3;--bg2:#ffffff;--bg3:#f0ede8;
+  --border:#e5e1da;--border2:#ede9e2;
+  --text:#1c1917;--text2:#6b6560;--text3:#a8a29e;
+  --sh:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
+  --sh-md:0 4px 12px rgba(0,0,0,.08);
+  --font:'Syne',sans-serif;--mono:'DM Mono',monospace;
+  --r:10px;--r-sm:6px;
+}
+html{background:var(--bg);color:var(--text);font-family:var(--font);}
+
+.shell{max-width:1020px;margin:0 auto;padding:28px 18px 80px;}
+
+/* HEADER */
+.hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;gap:16px;flex-wrap:wrap;}
+.eyebrow{font-family:var(--mono);font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;}
+.h-title{font-size:clamp(24px,4.5vw,38px);font-weight:800;line-height:1.05;}
+.h-title span{color:var(--orange);}
+.h-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:5px;}
+.sync-btn{display:flex;align-items:center;gap:8px;padding:8px 15px;border-radius:30px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-family:var(--mono);font-size:11px;cursor:pointer;transition:all .2s;white-space:nowrap;box-shadow:var(--sh);}
+.sync-btn:hover{border-color:var(--orange);color:var(--orange);}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0;}
+.sdot.syncing{background:var(--amber);animation:blink 1s infinite;}
+.sdot.ok{background:var(--green);}
+.sdot.err{background:var(--red);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* RACE STRIP */
+.race-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;}
+@media(max-width:520px){.race-strip{grid-template-columns:1fr;}}
+.race-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);position:relative;}
+.race-card.target{border-left:3px solid var(--orange);}
+.rc-ey{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.race-card.target .rc-ey{color:var(--orange);}
+.rc-name{font-size:15px;font-weight:700;margin-bottom:3px;}
+.rc-meta{font-family:var(--mono);font-size:11px;color:var(--text2);}
+.days-pill{position:absolute;top:12px;right:12px;background:var(--orange-d);color:var(--orange);font-family:var(--mono);font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px;}
+
+/* TABS */
+.tabs{display:flex;gap:3px;margin-bottom:18px;background:var(--bg2);padding:4px;border-radius:30px;border:1px solid var(--border);width:fit-content;box-shadow:var(--sh);}
+.tab{padding:6px 15px;border-radius:30px;font-family:var(--mono);font-size:11px;cursor:pointer;color:var(--text2);background:none;border:none;transition:all .2s;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--orange);color:#fff;font-weight:500;}
+.panel{display:none;}.panel.active{display:block;}
+
+/* FC ZONE LEGEND */
+.zone-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);box-shadow:var(--sh);}
+.zone-chip{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;}
+
+/* WEEK CARDS */
+.wk{border:1px solid var(--border);border-radius:var(--r);margin-bottom:7px;overflow:hidden;background:var(--bg2);box-shadow:var(--sh);}
+.wk-hdr{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .15s;user-select:none;}
+.wk-hdr:hover{background:var(--bg3);}
+.wk-title{font-size:13px;font-weight:700;}
+.arrow{color:var(--orange);margin-right:4px;}
+.wk-meta{font-family:var(--mono);font-size:11px;color:var(--text2);display:flex;align-items:center;gap:8px;}
+
+/* TABLE - 5 colonne: giorno | piano+FC | strava | gear | voto */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl thead th{padding:5px 9px;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;background:var(--bg3);border-top:1px solid var(--border2);text-align:left;}
+.tbl thead th:not(:last-child){border-right:1px solid var(--border2);}
+.tbl td{padding:8px 9px;border-top:1px solid var(--border2);vertical-align:top;font-size:12px;}
+.tbl td:not(:last-child){border-right:1px solid var(--border2);}
+.tbl tr:hover td{background:rgba(0,0,0,.015);}
+.tbl tr.today-row td{background:rgba(29,78,216,.05);border-top-color:rgba(29,78,216,.15);}
+
+.dn{font-weight:700;font-size:12px;}
+.dd{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:1px;}
+.plan-t{font-weight:600;font-size:12px;color:var(--blue);}
+.plan-d{font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:2px;line-height:1.4;}
+.fc-target{font-family:var(--mono);font-size:10px;margin-top:4px;padding:2px 6px;border-radius:4px;display:inline-block;font-weight:500;}
+.act-n{font-weight:600;font-size:12px;}
+.act-m{font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:2px;line-height:1.6;}
+.act-e{font-family:var(--mono);font-size:11px;color:var(--text3);}
+
+/* GEAR */
+.gear-wrap{font-family:var(--mono);font-size:11px;}
+.gear-name{font-weight:500;color:var(--text);font-size:11px;}
+.gear-km{font-size:10px;color:var(--text2);margin-top:2px;}
+
+
+/* BADGES */
+.bdg{display:inline-flex;align-items:center;gap:3px;font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:20px;margin-top:3px;font-weight:500;}
+.b-ok{background:var(--green-d);color:var(--green);}
+.b-miss{background:var(--amber-d);color:var(--amber);}
+.b-rest{background:var(--bg3);color:var(--text3);}
+.b-bonus{background:var(--blue-d);color:var(--blue);}
+.b-today{background:var(--orange-d);color:var(--orange);}
+.b-future{background:var(--bg3);color:var(--text3);}
+.b-race{background:var(--purple-d);color:var(--purple);}
+
+/* SCORE */
+.sc-wrap{text-align:center;}
+.sc-circle{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;margin:0 auto 2px;cursor:help;transition:transform .15s;}
+.sc-circle:hover{transform:scale(1.1);}
+.sc-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);}
+/* Global floating tooltip */
+#sc-global-tip{display:none;position:fixed;z-index:9999;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;width:260px;font-size:11px;color:var(--text2);line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.13);text-align:left;pointer-events:none;}
+.tip-row{display:flex;justify-content:space-between;padding:1px 0;}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px;margin-bottom:18px;}
+.stat-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;box-shadow:var(--sh);}
+.st-lbl{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;}
+.st-val{font-size:21px;font-weight:800;}
+.st-sub{font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:2px;}
+
+/* CHART */
+.chart-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:10px;box-shadow:var(--sh);}
+.chart-title{font-family:var(--mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px;}
+.chart-c{position:relative;height:200px;}
+
+/* NEXT */
+.next-item{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border2);align-items:flex-start;}
+.next-bubble{width:42px;height:42px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.type-pill{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:3px;}
+.fc-pill{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:3px;margin-left:4px;}
+
+/* LOADING */
+#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px;transition:opacity .4s;}
+#loading.hidden{opacity:0;pointer-events:none;}
+.ld-logo{font-size:30px;font-weight:800;color:var(--orange);}
+.ld-bar{width:140px;height:2px;background:var(--border);border-radius:2px;overflow:hidden;}
+.ld-fill{height:100%;background:var(--orange);border-radius:2px;animation:ld 1.5s ease-in-out infinite;}
+@keyframes ld{0%{width:0;margin-left:0}50%{width:100%;margin-left:0}100%{width:0;margin-left:100%}}
+.ld-txt{font-family:var(--mono);font-size:11px;color:var(--text2);}
+</style>
+</head>
+<body>
+<div id="loading">
+  <div class="ld-logo">M × STR</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+  <div class="ld-txt" id="ld-txt">Connessione a Strava...</div>
+</div>
+<div id="sc-global-tip"></div>
+
+<div class="shell">
+  <div class="hdr">
+    <div>
+      <div class="eyebrow">Training Dashboard</div>
+      <div class="h-title">Matteo <span>×</span> Firenze</div>
+      <div class="h-sub" id="h-sub">Caricamento...</div>
+    </div>
+    <button class="sync-btn" onclick="sync()">
+      <div class="sdot" id="sdot"></div>
+      <span id="s-txt">Sincronizza</span>
+    </button>
+  </div>
+
+  <div class="race-strip">
+    <div class="race-card">
+      <div class="rc-ey">✓ Completata</div>
+      <div class="rc-name">Leuven Marathon</div>
+      <div class="rc-meta">19 apr 2026 · 3h11'58" · 4:32/km · FC 179 bpm</div>
+    </div>
+    <div class="race-card target">
+      <div class="days-pill" id="days-pill">— giorni</div>
+      <div class="rc-ey">Obiettivo →</div>
+      <div class="rc-name">Firenze Marathon</div>
+      <div class="rc-meta">29 nov 2026 · Target sub 3h05 · 4:22/km</div>
+    </div>
+  </div>
+
+  <!-- Zone FC legend -->
+  <div class="zone-legend">
+    <span style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-right:4px;">FC max 198 bpm →</span>
+    <span class="zone-chip" style="background:#dbeafe;color:#1d4ed8;">Z1 Warm Up &nbsp;65-74% &nbsp;129-147 bpm</span>
+    <span class="zone-chip" style="background:#d1fae5;color:#15803d;">Z2 Easy &nbsp;74-81% &nbsp;147-160 bpm</span>
+    <span class="zone-chip" style="background:#fef9c3;color:#92400e;">Z3 Aerobic &nbsp;81-88% &nbsp;161-174 bpm</span>
+    <span class="zone-chip" style="background:#fed7aa;color:#9a3412;">Z4 Threshold &nbsp;88-94% &nbsp;175-186 bpm</span>
+    <span class="zone-chip" style="background:#fecaca;color:#b91c1c;">Z5 Maximum &nbsp;94-100% &nbsp;187-198 bpm</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('piano')">Piano settimane</button>
+    <button class="tab" onclick="showTab('compliance')">Compliance</button>
+
+  </div>
+
+  <div id="panel-piano" class="panel active"><div id="weeks-wrap"></div></div>
+  <div id="panel-compliance" class="panel">
+    <div class="stat-grid" id="comp-stats"></div>
+    <div class="chart-wrap"><div class="chart-title">Km piano vs reale (passato + futuro)</div><div class="chart-c"><canvas id="cKm"></canvas></div></div>
+    <div class="chart-wrap"><div class="chart-title">Compliance settimanale (%)</div><div class="chart-c"><canvas id="cComp"></canvas></div></div>
+    <div class="chart-wrap"><div class="chart-title">Voto medio per settimana</div><div class="chart-c"><canvas id="cScore"></canvas></div></div>
+  </div>
+
+</div>
+
+<script>
+const CLIENT_ID='236278',CLIENT_SECRET='f68156e295b547ef246c2dfe566d7ba67dfc18d2',REFRESH_TOKEN='dda5ef4eedc7d61b67f79c9440b4d50ce01bb404';
+const TODAY=new Date().toISOString().slice(0,10);
+const RACE=new Date('2026-11-29');
+document.getElementById('days-pill').textContent=Math.ceil((RACE-new Date())/864e5)+' giorni';
+
+const PIANO=[{"date":"2026-04-27","summary":"Riposo","desc":"Totale settimana indicativo: 25-30 km. Riposo + mobilità.","fcDesc":"FC:  nessun target; eventuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-04-28","summary":"Corsa facile 30'","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-04-29","summary":"Corsa facile 35'","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-04-30","summary":"Riposo o camminata","desc":"Camminata leggera facoltativa.","fcDesc":"FC: nessun target; se cammini  resta in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-05-01","summary":"Corsa facile 40' + allunghi","desc":"Ritmo: 5:20–5:40/km. Poi 4 allunghi da 15\" sciolti.","fcDesc":"FC: cors a in Z1-Z2 bassa (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-02","summary":"Corsa facile 30'","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-03","summary":"Corsa facile 50'","desc":"Ritmo: 5:20–5:40/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-04","summary":"Riposo","desc":"Totale settimana indicativo: 35-40 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-05-05","summary":"Corsa facile 45'","desc":"Ritmo: 5:20–5:40/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-06","summary":"Corsa facile 50' + allunghi","desc":"Ritmo: 5:20–5:40/km. Poi 6 allunghi da 15\" sciolti.","fcDesc":"FC: cors a in Z1-Z2 bassa (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-07","summary":"Recovery 35'","desc":"Ritmo: 5:30–5:50/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-05-08","summary":"Riposo + forza leggera","desc":"20-30' forza leggera.","fcDesc":"FC: nessun target corsa; forza leggera  senza accumulare fatica.","type":"rest"},{"date":"2026-05-09","summary":"Corsa facile 55'","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-10","summary":"Lungo facile 70'","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-05-11","summary":"Riposo","desc":"Totale settimana indicativo: 45-50 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-05-12","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-13","summary":"Corsa facile 8 km + forza","desc":"Ritmo: 5:15–5:35/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1-Z2 bassa  (129-155 bpm); forza leggera dopo.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-14","summary":"3 x 8' medio aerobico","desc":"Blocchi a 4:45–4:55/km. Recupero 2' jog a 5:30–5:50/km.","fcDesc":"FC : blocchi in Z3 bassa (161-168 bpm); recuperi in Z1-Z2 (129-160 bpm).","type":"qualita","hrMin":129,"hrMax":168},{"date":"2026-05-15","summary":"Recovery 7 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-05-16","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 6 allunghi sciolti.","fcDesc":"FC: corsa in Z1 -Z2 bassa (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-17","summary":"Lungo facile 16 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-05-18","summary":"Riposo","desc":"Totale settimana indicativo: 48-52 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-05-19","summary":"Corsa facile 11 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-20","summary":"Corsa facile 9 km + forza","desc":"Ritmo: 5:15–5:35/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1-Z2 bassa  (129-155 bpm); forza leggera dopo.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-21","summary":"Progressivo 20'","desc":"Da 5:10/km a 4:45/km.","fcDesc":"FC: progressivo da Z2 (147-160 bpm) a Z3  bassa/media (161-170 bpm).","type":"qualita","hrMin":147,"hrMax":170},{"date":"2026-05-22","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-05-23","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-24","summary":"Lungo facile 18 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-05-25","summary":"Riposo","desc":"Totale settimana indicativo: 52-56 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-05-26","summary":"6 x 3' soglia bassa","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:12–4:18/km con 2' jo g a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat e recuperi Z1-Z2 (129-160  bpm); ripetute in Z4 bassa (174-180 bpm).","type":"qualita","hrMin":129,"hrMax":180},{"date":"2026-05-27","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-28","summary":"Corsa facile brillante 12 km","desc":"Ritmo: 5:00–5:15/km.","fcDesc":"FC: Z2 (147-160 bpm), max Z3 bassa (16 1-165 bpm) se la giornata è buona.","type":"qualita","hrMin":147,"hrMax":165},{"date":"2026-05-29","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-05-30","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 6 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-05-31","summary":"Lungo facile 20 km","desc":"Ritmo: 5:05–5:25/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-06-01","summary":"Riposo","desc":"Totale settimana indicativo: 56-60 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-06-02","summary":"5 x 1 km","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:05–4:10/km con 2' jo g a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); ripe tute Z4-Z5 (174-198 bpm); recuperi Z1-Z2.","type":"qualita","hrMin":129,"hrMax":198},{"date":"2026-06-03","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-06-04","summary":"Steady 13 km","desc":"Ritmo: 4:45–4:55/km.","fcDesc":"FC: Z3 bassa (161-168 bpm), controllat a.","type":"qualita","hrMin":161,"hrMax":168},{"date":"2026-06-05","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-06-06","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-06-07","summary":"Lungo facile 22 km","desc":"Ritmo: 5:05–5:25/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-06-08","summary":"Riposo","desc":"Totale settimana indicativo: 58-62 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-06-09","summary":"Tempo continuo 25'","desc":"2 km risc a 5:20–5:40/km. Blocco a 4:10–4:15/km. 2 km defat .","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); blocco tempo in Z4 (174-186 bpm),  senza sprintare.","type":"qualita","hrMin":129,"hrMax":186},{"date":"2026-06-10","summary":"Corsa facile 11 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-06-11","summary":"Medio aerobico 14 km","desc":"Ritmo: 4:45–4:55/km.","fcDesc":"FC: Z3 bassa/media (161-170 bpm), aero bico ma controllato.","type":"qualita","hrMin":161,"hrMax":170},{"date":"2026-06-12","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-06-13","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 8 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-06-14","summary":"Lungo 22 km con finale steady","desc":"Primi 18 km a 5:10–5:25/km. Ultimi 4 km a 4:45–4:55/km.","fcDesc":"FC : primi km Z2 controllata (147-160 bpm); finale steady in Z3 bassa (161-1 68 bpm).","type":"lungo","hrMin":147,"hrMax":161},{"date":"2026-06-15","summary":"Riposo","desc":"Totale settimana indicativo: 48-52 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-06-16","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-06-17","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-06-18","summary":"8 x 400 m","desc":"2 km risc a 5:20–5:40/km. Ripetute a 3:55–4:00/km con 200 m  jog a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); r ipetute Z4-Z5 (174-198 bpm); recuperi Z1-Z2.","type":"qualita","hrMin":129,"hrMax":198},{"date":"2026-06-19","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-06-20","summary":"Corsa facile 8 km","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-06-21","summary":"Lungo facile 18 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-06-22","summary":"Riposo","desc":"Totale settimana indicativo: 60-64 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-06-23","summary":"4 x 2 km","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:08–4:12/km con 2' jo g a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat e recuperi Z1-Z2 (129-160  bpm); blocchi in Z4 bassa/media (174-184 bpm).","type":"qualita","hrMin":129,"hrMax":184},{"date":"2026-06-24","summary":"Corsa facile 11 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-06-25","summary":"Steady 14 km","desc":"Ritmo: 4:45–4:55/km.","fcDesc":"FC: Z3 bassa (161-168 bpm), controllat a.","type":"qualita","hrMin":161,"hrMax":168},{"date":"2026-06-26","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-06-27","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-06-28","summary":"Lungo facile 24 km","desc":"Ritmo: 5:05–5:25/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-06-29","summary":"Riposo","desc":"Totale settimana indicativo: 62-66 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-06-30","summary":"Tempo continuo 30'","desc":"2 km risc a 5:20–5:40/km. Blocco a 4:08–4:14/km. 2 km defat .","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); blocco tempo in Z4 (174-186 bpm),  senza sprintare.","type":"qualita","hrMin":129,"hrMax":186},{"date":"2026-07-01","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-02","summary":"Medio aerobico 15 km","desc":"Ritmo: 4:42–4:52/km.","fcDesc":"FC: Z3 bassa/media (161-170 bpm), aero bico ma controllato.","type":"qualita","hrMin":161,"hrMax":170},{"date":"2026-07-03","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-07-04","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 6 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-05","summary":"Lungo 24 km con finale steady","desc":"Primi 19 km a 5:05–5:25/km. Ultimi 5 km a 4:45–4:55/km.","fcDesc":"FC : primi km Z2 controllata (147-160 bpm); finale steady in Z3 bassa (161-1 68 bpm).","type":"lungo","hrMin":147,"hrMax":161},{"date":"2026-07-06","summary":"Riposo","desc":"Totale settimana indicativo: 64-68 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-07-07","summary":"6 x 1 km","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:00–4:05/km con 2' jo g a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); ripe tute Z4-Z5 (174-198 bpm); recuperi Z1-Z2.","type":"qualita","hrMin":129,"hrMax":198},{"date":"2026-07-08","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-09","summary":"16 km con 10 km a 4:35–4:40","desc":"Resto a 5:10–5:25/km.","fcDesc":"FC: tratti facili Z1-Z2 (129-160 bpm)\\ ; blocco a 4:35-4:40 in Z3 alta (168-174 bpm), max Z4 bassa.","type":"easy","hrMin":129,"hrMax":174},{"date":"2026-07-10","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-07-11","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-12","summary":"Lungo facile 26 km","desc":"Ritmo: 5:05–5:25/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-07-13","summary":"Riposo","desc":"Totale settimana indicativo: 64-70 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-07-14","summary":"3 x 10' soglia","desc":"2 km risc a 5:20–5:40/km. Blocchi a 4:08–4:12/km con 3' jog  a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat e recuperi Z1-Z2 (129-160 b pm); blocchi in Z4 (174-186 bpm), controllati.","type":"qualita","hrMin":129,"hrMax":186},{"date":"2026-07-15","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-16","summary":"Steady 15 km","desc":"Ritmo: 4:42–4:52/km.","fcDesc":"FC: Z3 bassa (161-168 bpm), controllat a.","type":"qualita","hrMin":161,"hrMax":168},{"date":"2026-07-17","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-07-18","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 8 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-19","summary":"Lungo 26 km con finale a 4:40–4:45","desc":"Primi 20 km a 5:05–5:25/km. Ultimi 6 km a 4:40–4:45/km.","fcDesc":"FC : primi km Z2 controllata (147-160 bpm); finale in Z3 (161-174 bpm), max  Z3 alta se stai bene.","type":"lungo","hrMin":147,"hrMax":174},{"date":"2026-07-20","summary":"Riposo","desc":"Totale settimana indicativo: 56-62 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-07-21","summary":"5 x 1200 m","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:00/km con 2' jog a 5:3 0–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); ripetute Z4 -Z5 (174-198 bpm); recuperi Z1-Z2.","type":"qualita","hrMin":129,"hrMax":198},{"date":"2026-07-22","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-23","summary":"Medio aerobico 14 km","desc":"Ritmo: 4:42–4:52/km.","fcDesc":"FC: Z3 bassa/media (161-170 bpm), aero bico ma controllato.","type":"qualita","hrMin":161,"hrMax":170},{"date":"2026-07-24","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-07-25","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-26","summary":"Lungo facile 22 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-07-27","summary":"Corsa facile 45'","desc":"Totale settimana indicativo: 35-42 km. Periodo via. Ritmo: 5:20 –5:40/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-28","summary":"Riposo","desc":"—","fcDesc":"FC: nessun target; eventuale mobilità/camminata in Z1 (1 29-147 bpm).","type":"rest","hrMin":147,"hrMax":162},{"date":"2026-07-29","summary":"Corsa facile 50' + allunghi","desc":"Ritmo: 5:15–5:35/km. Poi 6 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-07-30","summary":"Recovery 35'","desc":"Ritmo: 5:30–5:50/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-07-31","summary":"Riposo","desc":"—","fcDesc":"FC: nessun target; eventuale mobilità/camminata in Z1 (1 29-147 bpm).","type":"rest","hrMin":147,"hrMax":162},{"date":"2026-08-01","summary":"Corsa facile 60'","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-02","summary":"Lungo facile 75'","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-08-03","summary":"Riposo","desc":"Totale settimana indicativo: 38-45 km. Periodo via.","fcDesc":"FC: nessun  target; eventuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-08-04","summary":"Tempo controllato 20'","desc":"20' risc a 5:20–5:40/km. 20' a 4:15–4:20/km. 10' defat a 5: 20–5:40/km.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); blocco controllato in  Z4 bassa (174-180 bpm).","type":"easy","hrMin":129,"hrMax":180},{"date":"2026-08-05","summary":"Corsa facile 40'","desc":"Ritmo: 5:20–5:40/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-06","summary":"Riposo","desc":"—","fcDesc":"FC: nessun target; eventuale mobilità/camminata in Z1 (1 29-147 bpm).","type":"rest","hrMin":147,"hrMax":162},{"date":"2026-08-07","summary":"Corsa facile 50'","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-08","summary":"Recovery 35'","desc":"Ritmo: 5:30–5:50/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-08-09","summary":"Lungo facile 85'","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-08-10","summary":"Corsa facile 45'","desc":"Totale settimana indicativo: 40-48 km. Periodo via. Ritmo: 5:20 –5:40/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-11","summary":"Riposo","desc":"—","fcDesc":"FC: nessun target; eventuale mobilità/camminata in Z1 (1 29-147 bpm).","type":"rest","hrMin":147,"hrMax":162},{"date":"2026-08-12","summary":"10 x 1' brillante / 1' facile","desc":"Dentro 50' totali. Tratti veloci a 4:00–4:05/km, recuperi a  5:30–5:50/km.","fcDesc":"FC: tratti facili Z1-Z2 (129-160 bpm); tratti brillanti  Z4-Z5 a sensazione, la FC può arrivare in ritardo.","type":"qualita","hrMin":129,"hrMax":160},{"date":"2026-08-13","summary":"Corsa facile 40'","desc":"Ritmo: 5:20–5:40/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-14","summary":"Riposo","desc":"—","fcDesc":"FC: nessun target; eventuale mobilità/camminata in Z1 (1 29-147 bpm).","type":"rest","hrMin":147,"hrMax":162},{"date":"2026-08-15","summary":"Corsa facile 50'","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-16","summary":"Lungo facile 90'","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-08-17","summary":"Riposo","desc":"Totale settimana indicativo: 58-62 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-08-18","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-19","summary":"5 x 1 km","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:05–4:10/km con 2' jo g a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); ripe tute Z4-Z5 (174-198 bpm); recuperi Z1-Z2.","type":"qualita","hrMin":129,"hrMax":198},{"date":"2026-08-20","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-21","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-08-22","summary":"Corsa facile brillante 12 km","desc":"Ritmo: 5:00–5:15/km.","fcDesc":"FC: Z2 (147-160 bpm), max Z3 bassa (16 1-165 bpm) se la giornata è buona.","type":"qualita","hrMin":147,"hrMax":165},{"date":"2026-08-23","summary":"Lungo facile 24 km","desc":"Ritmo: 5:05–5:25/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-08-24","summary":"Corsa facile 45'","desc":"Totale settimana indicativo: 38-46 km. Possibile periodo instab ile. Ritmo: 5:20–5:40/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-25","summary":"Riposo","desc":"—","fcDesc":"FC: nessun target; eventuale mobilità/camminata in Z1 (1 29-147 bpm).","type":"rest","hrMin":147,"hrMax":162},{"date":"2026-08-26","summary":"Steady/medio 25'","desc":"20' risc a 5:20–5:40/km. 25' a 4:45–4:55/km. 10' defat a 5: 20–5:40/km.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); blocco steady/medio in  Z3 bassa (161-168 bpm).","type":"qualita","hrMin":129,"hrMax":168},{"date":"2026-08-27","summary":"Corsa facile 40'","desc":"Ritmo: 5:20–5:40/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-28","summary":"Riposo","desc":"—","fcDesc":"FC: nessun target; eventuale mobilità/camminata in Z1 (1 29-147 bpm).","type":"rest","hrMin":147,"hrMax":162},{"date":"2026-08-29","summary":"Corsa facile 50' + allunghi","desc":"Ritmo: 5:15–5:35/km. Poi 6 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-08-30","summary":"Lungo facile 90'","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-08-31","summary":"Riposo","desc":"Totale settimana indicativo: 62-68 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-09-01","summary":"3 x 3 km","desc":"2 km risc a 5:20–5:40/km. Blocchi a 4:10–4:15/km con 3' jog  a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat e recuperi Z1-Z2 (129-160 b pm); blocchi in Z4 bassa/media (174-184 bpm).","type":"qualita","hrMin":129,"hrMax":184},{"date":"2026-09-02","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-09-03","summary":"15 km con 8 km a 4:35–4:40","desc":"Resto a 5:10–5:25/km.","fcDesc":"FC: tratti facili Z1-Z2 (129-160 bpm)\\ ; blocco a 4:35-4:40 in Z3 alta (168-174 bpm), max Z4 bassa.","type":"easy","hrMin":129,"hrMax":174},{"date":"2026-09-04","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-09-05","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-09-06","summary":"Lungo facile 26 km","desc":"Ritmo: 5:05–5:25/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-09-07","summary":"Riposo","desc":"Totale settimana indicativo: 66-70 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-09-08","summary":"10 x 800 m","desc":"2 km risc a 5:20–5:40/km. Ripetute a 3:58–4:02/km con 90\" j og a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); rip etute Z4-Z5 (174-198 bpm); recuperi Z1-Z2.","type":"qualita","hrMin":129,"hrMax":198},{"date":"2026-09-09","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-09-10","summary":"Medio aerobico 16 km","desc":"Ritmo: 4:42–4:52/km.","fcDesc":"FC: Z3 bassa/media (161-170 bpm), aero bico ma controllato.","type":"qualita","hrMin":161,"hrMax":170},{"date":"2026-09-11","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-09-12","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 8 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-09-13","summary":"Lungo 28 km con finale steady","desc":"Primi 22 km a 5:05–5:25/km. Ultimi 6 km a 4:45–4:55/km.","fcDesc":"FC : primi km Z2 controllata (147-160 bpm); finale steady in Z3 bassa (161-1 68 bpm).","type":"lungo","hrMin":147,"hrMax":161},{"date":"2026-09-14","summary":"Riposo","desc":"Totale settimana indicativo: 66-72 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-09-15","summary":"Tempo continuo 40'","desc":"2 km risc a 5:20–5:40/km. Blocco a 4:10–4:15/km. 2 km defat .","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); blocco tempo in Z4 (174-186 bpm),  senza sprintare.","type":"qualita","hrMin":129,"hrMax":186},{"date":"2026-09-16","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-09-17","summary":"16 km con 10 km a ritmo maratona","desc":"Ritmo blocco: 4:24–4:30/km. Resto a 5:10–5:25/km.","fcDesc":"FC: trat ti facili Z1-Z2 (129-160 bpm); blocco a ritmo maratona in Z3 controllata  (161-174 bpm).","type":"qualita","hrMin":129,"hrMax":174},{"date":"2026-09-18","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-09-19","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-09-20","summary":"Lungo facile 28 km","desc":"Ritmo: 5:05–5:25/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-09-21","summary":"Riposo","desc":"Totale settimana indicativo: 52-58 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-09-22","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-09-23","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-09-24","summary":"6 x 1 km","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:00–4:05/km con 2' jo g a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); ripe tute Z4-Z5 (174-198 bpm); recuperi Z1-Z2.","type":"qualita","hrMin":129,"hrMax":198},{"date":"2026-09-25","summary":"Corsa facile 8 km","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-09-26","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 6 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-09-27","summary":"Lungo facile 22 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-09-28","summary":"Riposo","desc":"Totale settimana indicativo: 68-72 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-09-29","summary":"4 x 3 km","desc":"2 km risc a 5:20–5:40/km. Blocchi a 4:12–4:16/km con 3' jog  a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat e recuperi Z1-Z2 (129-160 b pm); blocchi in Z4 bassa/media (174-184 bpm).","type":"qualita","hrMin":129,"hrMax":184},{"date":"2026-09-30","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-01","summary":"Medio aerobico 16 km","desc":"Ritmo: 4:42–4:52/km.","fcDesc":"FC: Z3 bassa/media (161-170 bpm), aero bico ma controllato.","type":"qualita","hrMin":161,"hrMax":170},{"date":"2026-10-02","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-10-03","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-04","summary":"Lungo facile 30 km","desc":"Ritmo: 5:05–5:25/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-10-05","summary":"Riposo","desc":"Totale settimana indicativo: 70-74 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-10-06","summary":"3 x 4 km","desc":"2 km risc a 5:20–5:40/km. Blocchi a 4:15–4:18/km con 1 km f acile a 5:10–5:30/km. 2 km defat.","fcDesc":"FC: risc/defat e recuperi Z1-Z2 (129- 160 bpm); blocchi in Z4 bassa/media (174-184 bpm).","type":"qualita","hrMin":129,"hrMax":184},{"date":"2026-10-07","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-08","summary":"16 km con 12 km a ritmo maratona","desc":"Ritmo blocco: 4:24–4:30/km. Resto a 5:10–5:25/km.","fcDesc":"FC: trat ti facili Z1-Z2 (129-160 bpm); blocco a ritmo maratona in Z3 controllata  (161-174 bpm).","type":"qualita","hrMin":129,"hrMax":174},{"date":"2026-10-09","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-10-10","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 8 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-11","summary":"Lungo 30 km con finale a 4:28–4:32","desc":"Primi 22 km a 5:05–5:25/km. Ultimi 8 km a 4:28–4:32/km.","fcDesc":"FC : primi km Z2 controllata (147-160 bpm); finale in Z3 (161-174 bpm), max  Z3 alta se stai bene.","type":"lungo","hrMin":147,"hrMax":174},{"date":"2026-10-12","summary":"Riposo","desc":"Totale settimana indicativo: 72-76 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-10-13","summary":"6 x 1600 m","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:05–4:08/km con 2' jo g a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); ripe tute Z4-Z5 (174-198 bpm); recuperi Z1-Z2.","type":"qualita","hrMin":129,"hrMax":198},{"date":"2026-10-14","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-15","summary":"Medio aerobico 18 km","desc":"Ritmo: 4:42–4:50/km.","fcDesc":"FC: Z3 bassa/media (161-170 bpm), aero bico ma controllato.","type":"qualita","hrMin":161,"hrMax":170},{"date":"2026-10-16","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-10-17","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-18","summary":"Lungo facile 32 km","desc":"Ritmo: 5:05–5:25/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-10-19","summary":"Riposo","desc":"Totale settimana indicativo: 66-72 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-10-20","summary":"Tempo continuo controllato 45'","desc":"2 km risc a 5:20–5:40/km. Blocco a 4:10–4:15/km. 2 km defat .","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); blocco tempo in Z4 (174-186 bpm),  senza sprintare.","type":"qualita","hrMin":129,"hrMax":186},{"date":"2026-10-21","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-22","summary":"18 km con 14 km a ritmo maratona","desc":"Ritmo blocco: 4:24–4:30/km. Resto a 5:10–5:25/km.","fcDesc":"FC: trat ti facili Z1-Z2 (129-160 bpm); blocco a ritmo maratona in Z3 controllata  (161-174 bpm).","type":"qualita","hrMin":129,"hrMax":174},{"date":"2026-10-23","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-10-24","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 6 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-25","summary":"Lungo progressivo 28 km","desc":"Da 5:10/km a 4:35/km.","fcDesc":"FC: parti da Z2 controllata (147-160 bpm ) e chiudi in Z3 (161-174 bpm), senza forzare in Z4.","type":"lungo","hrMin":147,"hrMax":174},{"date":"2026-10-26","summary":"Riposo","desc":"Totale settimana indicativo: 58-64 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-10-27","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-28","summary":"5 x 2 km","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:08–4:12/km con 2' jo g a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat e recuperi Z1-Z2 (129-160  bpm); blocchi in Z4 bassa/media (174-184 bpm).","type":"qualita","hrMin":129,"hrMax":184},{"date":"2026-10-29","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-10-30","summary":"Recovery 8 km + forza","desc":"Ritmo: 5:25–5:45/km. Poi forza 20-30'.","fcDesc":"FC corsa: Z1 (129-147  bpm), massimo Z2 bassa se serve; forza leggera dopo.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-10-31","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-11-01","summary":"24 km con 10 km a ritmo maratona","desc":"Primi e ultimi km a 5:05–5:25/km. Blocco centrale a 4:24–4: 30/km.","fcDesc":"FC: tratti facili Z1-Z2 (129-160 bpm); blocco a ritmo maratona in  Z3 controllata (161-174 bpm).","type":"qualita","hrMin":129,"hrMax":174},{"date":"2026-11-02","summary":"Riposo","desc":"Totale settimana indicativo: 70-76 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-11-03","summary":"3 x 5 km a ritmo maratona","desc":"2 km risc a 5:20–5:40/km. Blocchi a 4:24–4:30/km con 1 km f acile a 5:10–5:30/km. 2 km defat.","fcDesc":"FC: risc/defat e recuperi Z1-Z2 (129- 160 bpm); blocchi a ritmo maratona in Z3 controllata (161-174 bpm).","type":"qualita","hrMin":129,"hrMax":174},{"date":"2026-11-04","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-11-05","summary":"Corsa facile brillante 14 km","desc":"Ritmo: 5:00–5:15/km.","fcDesc":"FC: Z2 (147-160 bpm), max Z3 bassa (16 1-165 bpm) se la giornata è buona.","type":"qualita","hrMin":147,"hrMax":165},{"date":"2026-11-06","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-11-07","summary":"Corsa facile 10 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 8 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-11-08","summary":"Lungo chiave 30-32 km","desc":"Primi 18-20 km a 5:05–5:25/km. Ultimi 12 km a ritmo maratona  controllato 4:24–4:30/km.","fcDesc":"FC: primi km Z2 controllata (147-160 bpm); u ltimi 12 km a ritmo maratona in Z3 (161-174 bpm), senza entrare stabilmen te in Z4.","type":"lungo","hrMin":147,"hrMax":174},{"date":"2026-11-09","summary":"Riposo","desc":"Totale settimana indicativo: 58-64 km.","fcDesc":"FC: nessun target; eve ntuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-11-10","summary":"6 x 1 km","desc":"2 km risc a 5:20–5:40/km. Ripetute a 4:00–4:05/km con 2' jo g a 5:30–5:50/km. 2 km defat.","fcDesc":"FC: risc/defat Z1-Z2 (129-160 bpm); ripe tute Z4-Z5 (174-198 bpm); recuperi Z1-Z2.","type":"qualita","hrMin":129,"hrMax":198},{"date":"2026-11-11","summary":"Corsa facile 12 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-11-12","summary":"16 km con 10 km a ritmo maratona","desc":"Ritmo blocco: 4:24–4:30/km. Resto a 5:10–5:25/km.","fcDesc":"FC: trat ti facili Z1-Z2 (129-160 bpm); blocco a ritmo maratona in Z3 controllata  (161-174 bpm).","type":"qualita","hrMin":129,"hrMax":174},{"date":"2026-11-13","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-11-14","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-11-15","summary":"Lungo facile 24 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z2 controllata (147-160 bpm); se s ei stanco resta in Z1-Z2 bassa.","type":"lungo","hrMin":147,"hrMax":160},{"date":"2026-11-16","summary":"Riposo","desc":"Totale settimana indicativo: 45-50 km. Inizio scarico.","fcDesc":"FC: nes sun target; eventuale mobilità/camminata in Z1 (129-147 bpm).","type":"rest","hrMin":129,"hrMax":147},{"date":"2026-11-17","summary":"3 x 3 km a ritmo maratona","desc":"2 km risc a 5:20–5:40/km. Blocchi a 4:24–4:30/km con 1 km f acile a 5:10–5:30/km. 2 km defat.","fcDesc":"FC: risc/defat e recuperi Z1-Z2 (129- 160 bpm); blocchi a ritmo maratona in Z3 controllata (161-174 bpm).","type":"qualita","hrMin":129,"hrMax":174},{"date":"2026-11-18","summary":"Corsa facile 10 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-11-19","summary":"Corsa facile brillante 12 km","desc":"Ritmo: 5:00–5:15/km.","fcDesc":"FC: Z2 (147-160 bpm), max Z3 bassa (16 1-165 bpm) se la giornata è buona.","type":"qualita","hrMin":147,"hrMax":165},{"date":"2026-11-20","summary":"Recovery 8 km","desc":"Ritmo: 5:25–5:45/km.","fcDesc":"FC: Z1 (129-147 bpm), recupero vero.","type":"recovery","hrMin":129,"hrMax":147},{"date":"2026-11-21","summary":"Corsa facile 8 km + allunghi","desc":"Ritmo: 5:10–5:30/km. Poi 6 allunghi.","fcDesc":"FC: corsa in Z1-Z2 bass a (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-11-22","summary":"Corsa facile 18 km","desc":"Ritmo: 5:10–5:30/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-11-23","summary":"Riposo","desc":"Totale settimana indicativo senza gara: 18-22 km. Race week.","fcDesc":"","type":"rest"},{"date":"2026-11-24","summary":"Corsa facile 8 km + 5 x 100 m","desc":"Ritmo: 5:10–5:30/km. Poi 5 x 100 m sciolti.","fcDesc":"FC: corsa in Z1- Z2 bassa (129-155 bpm); allunghi sciolti, non guidati dalla FC.","type":"qualita","hrMin":129,"hrMax":155},{"date":"2026-11-25","summary":"Corsa facile 6 km","desc":"Ritmo: 5:15–5:35/km.","fcDesc":"FC: Z1-Z2 bassa (129-155 bpm), facile  vera.","type":"easy","hrMin":129,"hrMax":155},{"date":"2026-11-26","summary":"3 km a ritmo maratona","desc":"2 km risc a 5:20–5:40/km. 3 km a 4:24–4:30/km. 2 km defat.\\ nFC: risc/defat Z1-Z2 bassa (129-155 bpm); 3 km a ritmo maratona in Z3 co ntrollata (161-174 bpm).","fcDesc":"","type":"qualita"},{"date":"2026-11-27","summary":"Riposo","desc":"—","fcDesc":"FC: nessun target; eventuale mobilità/camminata in Z1 (1 29-147 bpm).","type":"rest","hrMin":147,"hrMax":162},{"date":"2026-11-28","summary":"Jogging 20-25' + allunghi","desc":"Ritmo: 5:25–5:45/km. Poi 4 allunghi brevi.","fcDesc":"FC: Z1 (129-147 b pm); allunghi sciolti, non guidati dalla FC.","type":"qualita","hrMin":129,"hrMax":147},{"date":"2026-11-29","summary":"FIRENZE MARATHON","desc":"Gara.","fcDesc":"FC gara: partenza Z2 alta/Z3 bassa (155-165 bpm); parte  centrale Z3 (161-174 bpm); finale max Z3 alta/Z4 bassa solo se stai bene .","type":"lungo","hrMin":155,"hrMax":174}];
+
+// Zone FC
+const ZONES=[
+  {name:'Z1',min:129,max:147,bg:'#dbeafe',col:'#1d4ed8'},
+  {name:'Z2',min:147,max:160,bg:'#d1fae5',col:'#15803d'},
+  {name:'Z3',min:161,max:174,bg:'#fef9c3',col:'#92400e'},
+  {name:'Z4',min:175,max:186,bg:'#fed7aa',col:'#9a3412'},
+  {name:'Z5',min:187,max:198,bg:'#fecaca',col:'#b91c1c'},
+];
+function getZone(hr){return ZONES.find(z=>hr>=z.min&&hr<=z.max)||null;}
+function zoneChip(hr){const z=getZone(hr);if(!z)return'';return`<span style="background:${z.bg};color:${z.col};font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:12px;font-weight:500;">${z.name} ${hr}bpm</span>`;}
+
+// Voti manuali con breakdown dettagliato
+const GEL_MAP={
+  "2026-05-10":{count:0,note:"Non necessario. Eventuale test solo se vuoi abituarti."},
+  "2026-05-17":{count:1,note:"1 gel a 60'. Sempre con acqua."},
+  "2026-05-24":{count:1,note:"1 gel a 60'. Il gel a 90' cadrebbe troppo tardi."},
+  "2026-05-31":{count:1,note:"1 gel a 60'. Il gel a 90' cadrebbe troppo tardi."},
+  "2026-06-07":{count:2,note:"2 gel: 60' + 90'. Sempre con acqua."},
+  "2026-06-14":{count:2,note:"2 gel: 60' + 90'. Secondo gel prima del finale steady."},
+  "2026-06-21":{count:1,note:"1 gel a 60'. Sempre con acqua."},
+  "2026-06-28":{count:2,note:"2 gel: 60' + 90'. Sempre con acqua."},
+  "2026-07-05":{count:2,note:"2 gel: 60' + 90'. Secondo gel prima del finale steady."},
+  "2026-07-12":{count:2,note:"2 gel: 60' + 90'. Il gel a 120' cadrebbe troppo tardi."},
+  "2026-07-19":{count:2,note:"2 gel: 60' + 90'. Secondo gel prima del finale veloce."},
+  "2026-07-26":{count:2,note:"2 gel: 60' + 90'. Sempre con acqua."},
+  "2026-08-02":{count:0,note:"Non necessario. Eventuale test."},
+  "2026-08-09":{count:1,note:"1 gel a 60'. Sempre con acqua."},
+  "2026-08-16":{count:1,note:"1 gel a 60'. Il gel a 90' sarebbe a fine corsa."},
+  "2026-08-23":{count:2,note:"2 gel: 60' + 90'. Sempre con acqua."},
+  "2026-08-30":{count:1,note:"1 gel a 60'. Sempre con acqua."},
+  "2026-09-06":{count:2,note:"2 gel: 60' + 90'. Sempre con acqua."},
+  "2026-09-13":{count:3,note:"3 gel: 60' + 90' + 120'. Terzo gel prima del finale steady."},
+  "2026-09-20":{count:3,note:"3 gel: 60' + 90' + 120'. Sempre con acqua."},
+  "2026-09-27":{count:2,note:"2 gel: 60' + 90'. Sempre con acqua."},
+  "2026-10-04":{count:3,note:"3 gel: 60' + 90' + 120'."},
+  "2026-10-11":{count:3,note:"3 gel: 60' + 90' + 120'. Terzo gel prima del finale."},
+  "2026-10-18":{count:3,note:"3 gel: 60' + 90' + 120'."},
+  "2026-10-25":{count:3,note:"3 gel: 60' + 90'."},
+  "2026-11-01":{count:2,note:"2 gel: 60' + 90'. Secondo gel prima o al blocco."},
+  "2026-11-08":{count:3,note:"3 gel: 60' + 90' + 120'. Terzo gel prima degli ultimi 12 km."},
+  "2026-11-15":{count:2,note:"2 gel: 60' + 90'. Sempre con acqua."},
+  "2026-11-22":{count:1,note:"1 gel a 60'. Opzionale, utile per testare senza stress."},
+};
+const VOTI={
+  "2026-04-28":{score:6,fc:155,hrTarget:[129,155],breakdown:{fc:5,passo:8,dist:7,piano:6},note:"FC borderline (155→target ≤155). Passo 5:42/km OK. Distanza 7km vs 30' previsti: bene. Settimana recovery post-maratona."},
+  "2026-04-29":{score:8,fc:147,hrTarget:[129,155],breakdown:{fc:9,passo:7,dist:8,piano:8},note:"FC 147 bpm perfetta per recovery. Passo 5:10 leggermente rapido ma FC bassa giustifica. Ottima sessione."},
+  "2026-05-01":{score:6,fc:155,hrTarget:[129,155],breakdown:{fc:6,passo:6,dist:5,piano:6},note:"10km invece di ~6-7 previsti. FC 155 al limite, passo 5:11 sopra range. Troppo volume in sett. recovery."},
+  "2026-05-02":{score:5,fc:158,hrTarget:[129,155],breakdown:{fc:4,passo:7,dist:4,piano:5},note:"Piano: 30' easy. Reale: 54' con FC 158 in compagnia. FC sopra target Z2, troppo lungo."},
+  "2026-05-03":{score:4,fc:170,hrTarget:[129,155],breakdown:{fc:2,passo:6,dist:7,piano:4},note:"🚨 FC 170bpm = Z3 in sessione che doveva essere Z1-Z2. Zona anaerobica in week recovery."},
+  "2026-05-05":{score:3,fc:173,hrTarget:[129,155],breakdown:{fc:2,passo:5,dist:6,piano:3},note:"🚨 FC 173bpm=Z3 alta, passo 5:06/km. Piano: Z1-Z2, 5:20-5:40/km. Sessione da medio, non da easy."},
+};
+
+// ── HELPERS ──
+const fmtP=s=>{const m=Math.floor(s/60),sc=Math.round(s%60);return m+"'"+String(sc).padStart(2,'0')+'"';};
+const fmtD=m=>(m/1000).toFixed(1)+' km';
+const fmtT=s=>{const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);return h?h+'h '+m+'m':m+'m';};
+const fmtDt=ds=>new Date(ds).toLocaleDateString('it-IT',{day:'2-digit',month:'short'});
+const getWMon=ds=>{const d=new Date(ds),dy=d.getDay()===0?6:d.getDay()-1,m=new Date(d);m.setDate(d.getDate()-dy);return m.toISOString().slice(0,10);};
+const DN=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
+const TC={easy:'#1d4ed8',recovery:'#15803d',lungo:'#b45309',qualita:'#FC4C02',rest:'#a8a29e'};
+const TL={easy:'Facile',recovery:'Recovery',lungo:'Lungo',qualita:'Qualità',rest:'Riposo'};
+const SC=s=>s>=8?'#15803d':s>=6?'#b45309':s>=4?'#FC4C02':'#b91c1c';
+const SL=s=>s>=8?'Ottimo':s>=6?'Buono':s>=4?'Rivedere':'Critico';
+
+// Stima km previsti per tipo
+function plannedKm(p){
+  const s=p.summary.toLowerCase();
+  const m=s.match(/(\d+)\s*km/);if(m)return parseInt(m[1]);
+  const min=s.match(/(\d+)'/);
+  if(min){const t=parseInt(min[1]);return Math.round(t*3.3/60*10)/10;}
+  return 8;
+}
+
+// Score automatico avanzato
+function autoScore(plan,act){
+  if(!act||plan.type==='rest')return null;
+  const hr=act.average_heartrate||0;
+  const spk=act.moving_time/(act.distance/1000);
+  const distKm=act.distance/1000;
+  const targetKm=plannedKm(plan);
+  let score=7,breakdown={fc:7,passo:7,dist:7,piano:7};
+
+  // FC vs target zona
+  if(plan.hrMax){
+    const over=hr-plan.hrMax;
+    if(over>20){breakdown.fc=2;score-=3;}
+    else if(over>10){breakdown.fc=4;score-=2;}
+    else if(over>0){breakdown.fc=6;score-=1;}
+    else if(over<=-5){breakdown.fc=9;score+=1;}
+    else{breakdown.fc=8;}
+  }
+
+  // Distanza vs target
+  const distRatio=distKm/targetKm;
+  if(distRatio>1.3){breakdown.dist=5;score-=1;}
+  else if(distRatio>=0.85&&distRatio<=1.15){breakdown.dist=9;score+=1;}
+  else if(distRatio<0.7){breakdown.dist=5;score-=1;}
+
+  return{score:Math.max(1,Math.min(10,score)),fc:hr,hrTarget:[plan.hrMin||129,plan.hrMax||198],breakdown,note:autoNote(plan,act,hr,spk)};
+}
+
+function autoNote(plan,act,hr,spk){
+  const parts=[];
+  if(plan.hrMax&&hr>plan.hrMax+10)parts.push(`FC ${hr}bpm sopra target (max ${plan.hrMax}bpm)`);
+  else if(plan.hrMax&&hr<=plan.hrMax)parts.push(`FC ${hr}bpm nel range ✓`);
+  if(plan.fcDesc)parts.push(plan.fcDesc.replace('FC:','').trim());
+  return parts.join('. ')||'Sessione completata.';
+}
+
+const setStatus=(st,msg)=>{document.getElementById('sdot').className='sdot '+st;document.getElementById('s-txt').textContent=msg;};
+
+// ── API ──
+async function getToken(){
+  const r=await fetch('https://www.strava.com/oauth/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams({client_id:CLIENT_ID,client_secret:CLIENT_SECRET,refresh_token:REFRESH_TOKEN,grant_type:'refresh_token'})});
+  const d=await r.json();if(!d.access_token)throw new Error(JSON.stringify(d));return d.access_token;
+}
+async function fetchActs(token){
+  const since=Math.floor(new Date('2026-04-01').getTime()/1000);
+  const r=await fetch(`https://www.strava.com/api/v3/athlete/activities?per_page=200&after=${since}`,{headers:{Authorization:'Bearer '+token}});
+  return r.json();
+}
+async function fetchStats(token){
+  const r=await fetch('https://www.strava.com/api/v3/athletes/14965582/stats',{headers:{Authorization:'Bearer '+token}});
+  return r.json();
+}
+async function fetchGear(token,gearId){
+  if(!gearId)return null;
+  try{
+    const r=await fetch(`https://www.strava.com/api/v3/gear/${gearId}`,{headers:{Authorization:'Bearer '+token}});
+    return r.json();
+  }catch{return null;}
+}
+
+// ── GEAR CACHE & RUNNING TOTALS ──
+// Km totali scarpe DOPO gli allenamenti del 9-10 maggio 2026
+// g29467709 = Kiprun KS900 light → 670.6 km  (snapshot 11/05/2026)
+// g30573274 = Nike Vomero plus   → 67.0 km   (snapshot 11/05/2026)
+// Logica: i km snapshot sono il totale ALLA FINE dell'11/05.
+// Attività ≤ 11/05 → ricostruisce all'indietro (sottraendo)
+// Attività > 11/05 → aggiunge km allo snapshot
+const GEAR_SNAPSHOT_KM={
+  'g29467709': 670.6,
+  'g30573274': 67.0,
+};
+const GEAR_SNAPSHOT_DATE='2026-05-11';
+
+function buildGearTotals(activities){
+  const sorted=[...activities].sort((a,b)=>a.start_date_local.localeCompare(b.start_date_local));
+
+  // Separa attività prima e dopo lo snapshot
+  const before=sorted.filter(a=>a.start_date_local.slice(0,10)<=GEAR_SNAPSHOT_DATE);
+  const after=sorted.filter(a=>a.start_date_local.slice(0,10)>GEAR_SNAPSHOT_DATE);
+
+  // Km totali per gear nelle attività ≤ snapshot (per calcolare base pre-tracking)
+  const kmInBefore={};
+  before.forEach(a=>{
+    if(!a.gear_id)return;
+    kmInBefore[a.gear_id]=(kmInBefore[a.gear_id]||0)+a.distance/1000;
+  });
+
+  // Base pre-tracking = snapshot - km registrati fino allo snapshot
+  const gearBase={};
+  Object.keys(GEAR_SNAPSHOT_KM).forEach(id=>{
+    gearBase[id]=Math.max(0, GEAR_SNAPSHOT_KM[id]-(kmInBefore[id]||0));
+  });
+
+  // Ricostruisce km cumulativi per ogni attività in ordine cronologico
+  const gearRunning={};
+  const actGearKm={};
+  sorted.forEach(a=>{
+    if(!a.gear_id)return;
+    if(gearRunning[a.gear_id]===undefined)
+      gearRunning[a.gear_id]=gearBase[a.gear_id]||0;
+    gearRunning[a.gear_id]+=a.distance/1000;
+    actGearKm[a.id]={gearId:a.gear_id,km:Math.round(gearRunning[a.gear_id]*10)/10};
+  });
+  return actGearKm;
+}
+
+// ── BUILD DASHBOARD ──
+function buildDashboard(activities,stats,gearMap,gearTotals){
+  const byDate={};
+  (activities||[]).forEach(a=>{const ds=a.start_date_local.slice(0,10);if(!byDate[ds])byDate[ds]=[];byDate[ds].push(a);});
+
+  const totKmYTD=stats?(stats.ytd_run_totals.distance/1000).toFixed(0):'—';
+  const totRunYTD=stats?stats.ytd_run_totals.count:'—';
+  document.getElementById('h-sub').textContent=`${totRunYTD} corse · ${totKmYTD} km nel 2026 · Aggiornato ${new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})}`;
+
+  // ── PIANO TAB ──
+  const weekMap={};
+  PIANO.forEach(p=>{const w=getWMon(p.date);if(!weekMap[w])weekMap[w]=[];weekMap[w].push(p);});
+  const sortedW=Object.keys(weekMap).sort();
+  const wrap=document.getElementById('weeks-wrap');wrap.innerHTML='';
+  const allScoresMap={};
+  let currentWeekIdx=-1;
+  sortedW.forEach((mon,wi)=>{const end=new Date(mon);end.setDate(end.getDate()+6);if(mon<=TODAY&&TODAY<=end.toISOString().slice(0,10))currentWeekIdx=wi;});
+
+  sortedW.forEach((mon,wi)=>{
+    const days=weekMap[mon];
+    const runDays=days.filter(d=>d.type!=='rest');
+    const done=runDays.filter(d=>byDate[d.date]&&byDate[d.date].some(a=>['Run','Walk'].includes(a.type)));
+    const end=new Date(mon);end.setDate(end.getDate()+6);
+    const isCurr=wi===currentWeekIdx;
+    const pct=runDays.length?Math.round(done.length/runDays.length*100):null;
+    const pctCol=pct===null?'var(--text3)':pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+    const pctStr=pct!==null?pct+'%':isCurr?'in corso':'—';
+
+    const rows=days.map(p=>{
+      const d=new Date(p.date);
+      const di=d.getDay()===0?6:d.getDay()-1;
+      const reals=byDate[p.date]||[];
+      const real=reals.find(a=>['Run','Ride','Swim','Walk'].includes(a.type));
+      const isPast=p.date<TODAY,isToday=p.date===TODAY,isFut=p.date>TODAY;
+      const isRace=p.summary==='FIRENZE MARATHON';
+      const col=TC[p.type]||'#888';
+
+      // ── Voto ──
+      let sv=VOTI[p.date]||null;
+      if(!sv&&real&&p.type!=='rest'){sv=autoScore(p,real);}
+      if(sv)allScoresMap[p.date]=sv.score;
+
+      // ── Gear cell ──
+      let gearHtml='<span class="act-e">—</span>';
+      if(real&&real.gear_id){
+        const gt=gearTotals[real.id];
+        const gInfo=gearMap[real.gear_id];
+        const name=gInfo?gInfo.name:(real.gear_id||'Scarpa');
+        const kmTot=gt?gt.km:null;
+        gearHtml=`<div class="gear-name">${name}</div>${kmTot!==null?`<div class="gear-km">${kmTot} km</div>`:''}`;
+      }
+
+      // ── Score cell ──
+      let scoreCell='<td style="text-align:center;vertical-align:middle;padding:5px 4px;">';
+      if(isRace){scoreCell+='<div style="font-size:18px;">🏁</div>';}
+      else if(sv){
+        const c=SC(sv.score);
+        const z=sv.fc?getZone(sv.fc):null;
+        const hrT=sv.hrTarget;
+        const tipHtml=`<strong>${sv.score}/10 — ${SL(sv.score)}</strong>${sv.breakdown?`<div class="tip-row"><span>FC</span><span style="color:${SC(sv.breakdown.fc)};">${sv.breakdown.fc}/10</span></div><div class="tip-row"><span>Passo</span><span style="color:${SC(sv.breakdown.passo)};">${sv.breakdown.passo}/10</span></div><div class="tip-row"><span>Distanza</span><span style="color:${SC(sv.breakdown.dist)};">${sv.breakdown.dist}/10</span></div><div class="tip-row"><span>Piano</span><span style="color:${SC(sv.breakdown.piano)};">${sv.breakdown.piano}/10</span></div><hr style="margin:5px 0;border:none;border-top:1px solid var(--border2);">`:''}${sv.fc?`<div style="margin-bottom:4px;">${zoneChip(sv.fc)} vs target ${hrT?hrT[0]+'-'+hrT[1]+' bpm':''}</div>`:''}<div style="font-size:10px;color:var(--text2);line-height:1.4;">${sv.note}</div>`;
+        scoreCell+=`<div class="sc-wrap" data-tip="${encodeURIComponent(tipHtml)}"><div class="sc-circle" style="background:${c}18;color:${c};">${sv.score}</div><div class="sc-lbl">${SL(sv.score)}</div></div>`;
+      } else if(p.type==='rest'){scoreCell+='<span style="color:var(--text3);font-size:13px;">—</span>';}
+      else{scoreCell+='<span style="color:var(--text3);font-family:var(--mono);font-size:12px;">?</span>';}
+      scoreCell+='</td>';
+
+      // FC target e tipo nel piano — pillole colorate
+      let fcChip='';
+      if(p.fcDesc&&p.type!=='rest'){
+        const label=p.hrMin&&p.hrMax?`${p.hrMin}–${p.hrMax} bpm`:'';
+        if(label){const zp=getZone(Math.round((p.hrMin+p.hrMax)/2));fcChip=`<span class="fc-pill" style="background:${zp?zp.bg:'#f3f4f6'};color:${zp?zp.col:'#888'};">FC ${label}</span>`;}
+      }
+      const planCol=TC[p.type]||'#888';
+      // Gel info — testo semplice senza emoji né riquadri
+      const gelData=GEL_MAP[p.date];
+      const gelText=gelData&&gelData.count>0?`<div class="plan-d" style="margin-top:2px;">Gel: ${gelData.note}</div>`:'';
+      // Tipo tra parentesi sul titolo
+      const typeLabel=p.type!=='rest'&&TL[p.type]?` <span style="font-family:var(--mono);font-size:10px;font-weight:400;color:var(--text2);">(${TL[p.type]})</span>`:'';
+      const planCell=p.type==='rest'
+        ?`<div class="plan-t" style="color:var(--text3);">Riposo</div>${p.desc&&p.desc!=='—'?`<div class="plan-d" style="color:var(--text3);">${p.desc}</div>`:''}`
+        :`<div class="plan-t" style="color:var(--blue);">${p.summary}${typeLabel}</div>
+          ${p.desc&&p.desc!=='—'?`<div class="plan-d">${p.desc}</div>`:''}
+          ${gelText}
+          <div style="margin-top:4px;">${fcChip}</div>`;
+
+      // ── Strava cell ──
+      let badge='',realHtml='';
+      if(isRace){badge='<span class="bdg b-race">🏁 GARA</span>';realHtml='<span class="act-e" style="color:var(--purple);">Firenze Marathon 2026</span>';}
+      else if(real){
+        const spk=real.moving_time/(real.distance/1000);
+        const z=real.has_heartrate?getZone(Math.round(real.average_heartrate)):null;
+        const hrBadge=real.has_heartrate?`<div style="margin-top:3px;"><span style="background:${z?z.bg:'#f3f4f6'};color:${z?z.col:'#666'};font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:10px;">${Math.round(real.average_heartrate)} bpm</span></div>`:'';
+        realHtml=`<div class="act-n">${real.name}</div>
+          <div class="act-m">${fmtD(real.distance)} · ${fmtT(real.moving_time)} · ${fmtP(spk)}/km</div>${hrBadge}`;
+        badge=p.type==='rest'?'<span class="bdg b-bonus">+ bonus</span>':'<span class="bdg b-ok">✓</span>';
+      } else if(p.type==='rest'){realHtml='<span class="act-e">—</span>';badge='<span class="bdg b-rest">riposo</span>';}
+      else if(isToday){realHtml='<span class="act-e" style="color:var(--orange);">Da fare oggi</span>';badge='<span class="bdg b-today">OGGI</span>';}
+      else if(isFut){realHtml='<span class="act-e">In programma</span>';}
+      else{realHtml='<span class="act-e" style="color:var(--amber);">Non registrata</span>';badge='<span class="bdg b-miss">⚠ manca</span>';}
+
+      const rowCls=isToday?'today-row':'';
+      return `<tr class="${rowCls}">
+        <td><div class="dn">${DN[di]}</div><div class="dd">${d.getDate()} ${fmtDt(p.date).split(' ')[1]}</div>${badge}</td>
+        <td>${planCell}</td>
+        <td>${realHtml}</td>
+        <td style="min-width:110px;">${gearHtml}</td>
+        ${scoreCell}
+      </tr>`;
+    }).join('');
+
+    const card=document.createElement('div');card.className='wk';
+    card.innerHTML=`
+      <div class="wk-hdr" onclick="toggleW('wb${wi}')">
+        <div class="wk-title">${isCurr?'<span class="arrow">▶</span>':''}Sett. ${wi+1} · ${fmtDt(mon)} – ${fmtDt(end.toISOString().slice(0,10))}</div>
+        <div class="wk-meta">${done.length}/${runDays.length} sessioni <span style="color:${pctCol};font-weight:600;">${pctStr}</span></div>
+      </div>
+      <div id="wb${wi}" style="display:${isCurr?'block':'none'}">
+        <table class="tbl">
+          <thead><tr>
+            <th style="width:74px;">Giorno</th>
+            <th>Piano Firenze</th>
+            <th>Strava live</th>
+            <th style="width:120px;">Gear</th>
+            <th style="width:70px;text-align:center;">Voto</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+    wrap.appendChild(card);
+  });
+
+  // Scroll alla settimana corrente
+  if(currentWeekIdx>=0){
+    setTimeout(()=>{
+      const el=document.getElementById('wb'+currentWeekIdx);
+      if(el&&el.parentElement){el.parentElement.scrollIntoView({behavior:'smooth',block:'start'});}
+    },400);
+  }
+
+  // ── COMPLIANCE TAB ──
+  const compW=sortedW.map((mon,wi)=>{
+    const days=weekMap[mon];
+    const run=days.filter(d=>d.type!=='rest');
+    const dn=run.filter(d=>byDate[d.date]&&byDate[d.date].some(a=>['Run','Walk'].includes(a.type)));
+    const kmR=days.reduce((s,p)=>(s+(byDate[p.date]||[]).reduce((ss,a)=>ss+a.distance/1000,0)),0);
+    const kmP=run.reduce((s,p)=>s+plannedKm(p),0);
+    const scores=days.filter(d=>allScoresMap[d.date]).map(d=>allScoresMap[d.date]);
+    const end=new Date(mon);end.setDate(end.getDate()+6);
+    const isPastW=end.toISOString().slice(0,10)<TODAY;
+    return{label:`S${wi+1}`,pct:run.length?Math.round(dn.length/run.length*100):null,kmR:+kmR.toFixed(1),kmP:+kmP.toFixed(1),run:run.length,done:dn.length,avgSc:scores.length?(scores.reduce((s,x)=>s+x,0)/scores.length).toFixed(1):null,isPast:isPastW};
+  }).filter(d=>d.pct!==null);
+
+  const totP=compW.reduce((s,w)=>s+w.run,0),totD=compW.reduce((s,w)=>s+w.done,0);
+  const totKm=(activities||[]).filter(a=>a.start_date_local>='2026-04-27').reduce((s,a)=>s+a.distance/1000,0);
+  const allSc=Object.values(allScoresMap);
+  const avgSc=allSc.length?(allSc.reduce((s,x)=>s+x,0)/allSc.length).toFixed(1):null;
+
+  document.getElementById('comp-stats').innerHTML=[
+    {l:'Sessioni pianificate',v:totP,s:'nel periodo'},
+    {l:'Sessioni fatte',v:totD,s:'su Strava'},
+    {l:'Compliance',v:totP?Math.round(totD/totP*100)+'%':'—',s:'media'},
+    {l:'Km dal 27 apr',v:totKm.toFixed(0)+' km',s:'totale reale'},
+    {l:'Voto medio',v:avgSc?avgSc+'/10':'—',s:'sessioni valutate'},
+    {l:'Giorni alla gara',v:Math.ceil((RACE-new Date())/864e5),s:'Firenze 29 nov'},
+  ].map(c=>`<div class="stat-box"><div class="st-lbl">${c.l}</div><div class="st-val">${c.v}</div><div class="st-sub">${c.s}</div></div>`).join('');
+
+  setTimeout(()=>{
+    ['cComp','cKm','cScore'].forEach(id=>{const old=Chart.getChart(id);if(old)old.destroy();});
+    Chart.defaults.color='#a8a29e';Chart.defaults.borderColor='#e5e1da';
+
+    const pastW=compW.filter(w=>w.kmR>0||w.done>0);
+    const SPEEDO=['#15803d','#4ade80','#facc15','#f97316','#dc2626','#991b1b'];
+    const speedoComp=w=>{
+      // pct 0-100 → 6 buckets, reversed (high=green, low=red)
+      if(w.pct>=84)return SPEEDO[0];
+      if(w.pct>=67)return SPEEDO[1];
+      if(w.pct>=50)return SPEEDO[2];
+      if(w.pct>=34)return SPEEDO[3];
+      if(w.pct>=17)return SPEEDO[4];
+      return SPEEDO[5];
+    };
+    const speedoScore=v=>{
+      if(v>=9)return SPEEDO[0];
+      if(v>=7.5)return SPEEDO[1];
+      if(v>=6)return SPEEDO[2];
+      if(v>=4.5)return SPEEDO[3];
+      if(v>=3)return SPEEDO[4];
+      return SPEEDO[5];
+    };
+    new Chart(document.getElementById('cComp'),{type:'bar',data:{
+      labels:pastW.map(w=>w.label),
+      datasets:[{data:pastW.map(w=>w.pct),backgroundColor:pastW.map(w=>speedoComp(w)),borderRadius:6}]
+    },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:v=>v+'%',font:{size:11}},grid:{color:'rgba(0,0,0,0.04)'}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
+
+    // Km: mostra tutte le settimane (passate reale, future pianificate)
+    new Chart(document.getElementById('cKm'),{type:'bar',data:{
+      labels:compW.map(w=>w.label),
+      datasets:[
+        {label:'Piano',data:compW.map(w=>w.kmP),backgroundColor:'rgba(26,42,90,0.85)',borderRadius:5},
+        {label:'Reale',data:compW.map(w=>w.kmR||null),backgroundColor:'rgba(255,77,26,0.90)',borderRadius:5},
+      ]
+    },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+' km',font:{size:11}},grid:{color:'rgba(0,0,0,0.04)'}},x:{ticks:{font:{size:10},maxRotation:0},grid:{display:false}}}}});
+
+    const ws=compW.filter(w=>w.avgSc);
+    new Chart(document.getElementById('cScore'),{type:'bar',data:{
+      labels:ws.map(w=>w.label),
+      datasets:[{data:ws.map(w=>+w.avgSc),backgroundColor:ws.map(w=>speedoScore(+w.avgSc)),borderRadius:6}]
+    },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:10,ticks:{callback:v=>v+'/10',font:{size:11}},grid:{color:'rgba(0,0,0,0.04)'}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
+  },300);
+
+
+}
+
+// ── SYNC ──
+async function sync(){
+  setStatus('syncing','Sincronizzazione...');
+  document.getElementById('ld-txt').textContent='Connessione a Strava...';
+  document.getElementById('loading').classList.remove('hidden');
+  try{
+    const token=await getToken();
+    document.getElementById('ld-txt').textContent='Caricamento attività...';
+    const [acts,stats]=await Promise.all([fetchActs(token),fetchStats(token)]);
+    if(!Array.isArray(acts))throw new Error(JSON.stringify(acts));
+
+    document.getElementById('ld-txt').textContent='Caricamento gear...';
+    // Raccogli gear unici
+    const gearIds=[...new Set(acts.filter(a=>a.gear_id).map(a=>a.gear_id))];
+    const gearMap={};
+    await Promise.all(gearIds.map(async id=>{
+      const g=await fetchGear(token,id);
+      if(g&&g.name)gearMap[id]=g;
+    }));
+    const gearTotals=buildGearTotals(acts);
+
+    buildDashboard(acts,stats,gearMap,gearTotals);
+    setStatus('ok','Sincronizzato');
+  }catch(e){
+    console.warn(e.message);
+    setStatus('err','Dati offline');
+    buildDashboard([
+      {name:"a casa",type:"Run",distance:7005,moving_time:2400,average_heartrate:155,start_date_local:"2026-04-28T21:00:00",has_heartrate:true,gear_id:"g29467709",id:1},
+      {name:"in ripresa",type:"Run",distance:6805,moving_time:2100,average_heartrate:147,start_date_local:"2026-04-29T18:00:00",has_heartrate:true,gear_id:"g29467709",id:2},
+      {name:"corsetta",type:"Run",distance:10004,moving_time:3111,average_heartrate:155,start_date_local:"2026-05-01T18:00:00",has_heartrate:true,gear_id:"g30573274",id:3},
+      {name:"in compagnia",type:"Run",distance:10006,moving_time:3252,average_heartrate:158,start_date_local:"2026-05-02T11:00:00",has_heartrate:true,gear_id:"g30573274",id:4},
+      {name:"it's raining man",type:"Run",distance:9575,moving_time:3030,average_heartrate:170,start_date_local:"2026-05-03T19:00:00",has_heartrate:true,gear_id:"g29467709",id:5},
+      {name:"Corsa ora di pranzo",type:"Run",distance:8825,moving_time:2700,average_heartrate:173,start_date_local:"2026-05-05T11:00:00",has_heartrate:true,gear_id:"g29467709",id:6},
+    ],null,{
+      'g29467709':{name:'Kiprun KS900 light'},
+      'g30573274':{name:'Nike Vomero plus'},
+    },{
+      1:{gearId:'g29467709',km:7.0},
+      2:{gearId:'g29467709',km:13.8},
+      3:{gearId:'g30573274',km:10.0},
+      4:{gearId:'g30573274',km:20.0},
+      5:{gearId:'g29467709',km:23.4},
+      6:{gearId:'g29467709',km:32.2},
+    });
+  }
+  document.getElementById('loading').classList.add('hidden');
+}
+
+function toggleW(id){const el=document.getElementById(id);el.style.display=el.style.display==='none'?'block':'none';}
+function showTab(n){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelector(`[onclick="showTab('${n}')"]`).classList.add('active');document.getElementById('panel-'+n).classList.add('active');}
+
+// ── GLOBAL SCORE TOOLTIP ──
+(function(){
+  const tip=document.getElementById('sc-global-tip');
+  let currentWrap=null;
+
+  function showTip(wrap,e){
+    const encoded=wrap.getAttribute('data-tip');
+    if(!encoded)return;
+    tip.innerHTML=decodeURIComponent(encoded);
+    tip.style.display='block';
+    positionTip(e);
+  }
+
+  function positionTip(e){
+    const TW=tip.offsetWidth||260, TH=tip.offsetHeight||180;
+    const VW=window.innerWidth, VH=window.innerHeight;
+    const MARGIN=10;
+    let x=e.clientX+14, y=e.clientY+14;
+    if(x+TW>VW-MARGIN) x=e.clientX-TW-10;
+    if(y+TH>VH-MARGIN) y=e.clientY-TH-10;
+    if(x<MARGIN) x=MARGIN;
+    if(y<MARGIN) y=MARGIN;
+    tip.style.left=x+'px';
+    tip.style.top=y+'px';
+  }
+
+  document.addEventListener('mouseover',function(e){
+    const wrap=e.target.closest('.sc-wrap[data-tip]');
+    if(!wrap){if(currentWrap){tip.style.display='none';currentWrap=null;}return;}
+    currentWrap=wrap;
+    showTip(wrap,e);
+  });
+  document.addEventListener('mousemove',function(e){
+    if(!currentWrap)return;
+    positionTip(e);
+  });
+  document.addEventListener('mouseout',function(e){
+    if(!currentWrap)return;
+    const related=e.relatedTarget;
+    if(!related||!related.closest('.sc-wrap[data-tip]')){
+      tip.style.display='none';currentWrap=null;
+    }
+  });
+})();
+
+sync();
+
+// ── SERVICE WORKER ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => {
+        console.log('SW registrato:', reg.scope);
+        reg.addEventListener('updatefound', () => {
+          const newSW = reg.installing;
+          newSW.addEventListener('statechange', () => {
+            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+              const banner = document.createElement('div');
+              banner.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1c1917;color:#fff;padding:10px 18px;border-radius:30px;font-family:var(--mono);font-size:11px;z-index:9999;display:flex;gap:12px;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,.3)';
+              banner.innerHTML = '<span>Aggiornamento disponibile</span><button onclick="navigator.serviceWorker.controller.postMessage({type:\'SKIP_WAITING\'});location.reload();" style="background:var(--orange);border:none;color:#fff;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:inherit;font-size:11px;">Ricarica</button>';
+              document.body.appendChild(banner);
+            }
+          });
+        });
+      })
+      .catch(err => console.warn('SW non registrato:', err));
+
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!refreshing) { refreshing = true; location.reload(); }
+    });
+  });
+}
+</script>
+</body>
+</html>
