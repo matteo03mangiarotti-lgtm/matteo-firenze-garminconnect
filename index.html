@@ -84,7 +84,7 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 .wk-meta{font-family:var(--mono);font-size:11px;color:var(--text2);display:flex;align-items:center;gap:8px;}
 
 /* TABLE - 5 colonne: giorno | piano+FC | strava | gear | voto */
-.tbl{width:100%;border-collapse:collapse;}
+.tbl{width:100%;border-collapse:collapse;min-width:520px;}
 .tbl thead th{padding:5px 9px;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;background:var(--bg3);border-top:1px solid var(--border2);text-align:left;}
 .tbl thead th:not(:last-child){border-right:1px solid var(--border2);}
 .tbl td{padding:8px 9px;border-top:1px solid var(--border2);vertical-align:top;font-size:12px;}
@@ -518,8 +518,8 @@ function buildDashboard(activities,stats,gearMap,gearTotals){
         <div class="wk-title">${isCurr?'<span class="arrow">▶</span>':''}Sett. ${wi+1} · ${fmtDt(mon)} – ${fmtDt(end.toISOString().slice(0,10))}</div>
         <div class="wk-meta">${done.length}/${runDays.length} sessioni <span style="color:${pctCol};font-weight:600;">${pctStr}</span></div>
       </div>
-      <div id="wb${wi}" style="display:${isCurr?'block':'none'}">
-        <table class="tbl">
+      <div id="wb${wi}" style="display:${isCurr?'block':'none'};overflow-x:auto;-webkit-overflow-scrolling:touch;">
+        <table class="tbl" style="min-width:520px;">
           <thead><tr>
             <th style="width:74px;">Giorno</th>
             <th>Piano Firenze</th>
