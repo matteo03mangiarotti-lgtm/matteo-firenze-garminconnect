@@ -152,6 +152,20 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);}
 .ld-fill{height:100%;background:var(--orange);border-radius:2px;animation:ld 1.5s ease-in-out infinite;}
 @keyframes ld{0%{width:0;margin-left:0}50%{width:100%;margin-left:0}100%{width:0;margin-left:100%}}
 .ld-txt{font-family:var(--mono);font-size:11px;color:var(--text2);}
+/* ── MOBILE: tabella → cards ── */
+@media(max-width:640px){
+  .shell{padding:16px 10px 80px;}
+  .tbl{display:none !important;}
+  .m-day-cards{display:block !important;}
+}
+.m-day-cards{display:none;padding:6px 10px 10px;}
+.m-card{border:1px solid var(--border2);border-radius:var(--r-sm);margin-bottom:8px;padding:10px 12px;background:var(--bg);}
+.m-card.today-card{border-color:rgba(29,78,216,.3);background:rgba(29,78,216,.03);}
+.m-card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.m-card-day{font-size:13px;font-weight:700;}
+.m-card-date{font-family:var(--mono);font-size:10px;color:var(--text3);}
+.m-card-sec{margin-top:6px;padding-top:6px;border-top:1px solid var(--border2);}
+.m-card-lbl{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:3px;}
 </style>
 </head>
 <body>
@@ -431,7 +445,7 @@ function buildDashboard(activities,stats,gearMap,gearTotals){
     const pctCol=pct===null?'var(--text3)':pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
     const pctStr=pct!==null?pct+'%':isCurr?'in corso':'—';
 
-    const rows=days.map(p=>{
+    const rowsAndCards=days.map(p=>{
       const d=new Date(p.date);
       const di=d.getDay()===0?6:d.getDay()-1;
       const reals=byDate[p.date]||[];
@@ -503,14 +517,32 @@ function buildDashboard(activities,stats,gearMap,gearTotals){
       else{realHtml='<span class="act-e" style="color:var(--amber);">Non registrata</span>';badge='<span class="bdg b-miss">⚠ manca</span>';}
 
       const rowCls=isToday?'today-row':'';
-      return `<tr class="${rowCls}">
+      const tableRow = `<tr class="${rowCls}">
         <td><div class="dn">${DN[di]}</div><div class="dd">${d.getDate()} ${fmtDt(p.date).split(' ')[1]}</div>${badge}</td>
         <td>${planCell}</td>
         <td>${realHtml}</td>
         <td style="min-width:110px;">${gearHtml}</td>
         ${scoreCell}
       </tr>`;
-    }).join('');
+
+      const mobileCard = `<div class="m-card${isToday?' today-card':''}">
+        <div class="m-card-hdr">
+          <div><span class="m-card-day">${DN[di]}</span> <span class="m-card-date">${d.getDate()} ${fmtDt(p.date).split(' ')[1]}</span></div>
+          <div>${badge}</div>
+        </div>
+        <div class="m-card-sec">
+          <div class="m-card-lbl">Piano Firenze</div>
+          <div>${planCell}</div>
+        </div>
+        ${realHtml&&realHtml!=='<span class="act-e">—</span>'?`<div class="m-card-sec"><div class="m-card-lbl">Strava live</div><div>${realHtml}</div></div>`:''}
+        ${gearHtml?`<div class="m-card-sec"><div class="m-card-lbl">Gear</div><div style="font-size:11px;color:var(--text2);">${gearHtml}</div></div>`:''}
+        ${scoreCell.replace('<td','<div').replace('</td>','</div>').replace(/style="[^"]*"/,'')}
+      </div>`;
+
+      return {tableRow, mobileCard};
+    });
+    const rows = rowsAndCards.map(x=>x.tableRow).join('');
+    const mobileCards = rowsAndCards.map(x=>x.mobileCard).join('');
 
     const card=document.createElement('div');card.className='wk';
     card.innerHTML=`
@@ -518,17 +550,20 @@ function buildDashboard(activities,stats,gearMap,gearTotals){
         <div class="wk-title">${isCurr?'<span class="arrow">▶</span>':''}Sett. ${wi+1} · ${fmtDt(mon)} – ${fmtDt(end.toISOString().slice(0,10))}</div>
         <div class="wk-meta">${done.length}/${runDays.length} sessioni <span style="color:${pctCol};font-weight:600;">${pctStr}</span></div>
       </div>
-      <div id="wb${wi}" style="display:${isCurr?'block':'none'};overflow-x:auto;-webkit-overflow-scrolling:touch;">
-        <table class="tbl" style="min-width:520px;">
-          <thead><tr>
-            <th style="width:74px;">Giorno</th>
-            <th>Piano Firenze</th>
-            <th>Strava live</th>
-            <th style="width:120px;">Gear</th>
-            <th style="width:70px;text-align:center;">Voto</th>
-          </tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
+      <div id="wb${wi}" style="display:${isCurr?'block':'none'}">
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="tbl" style="min-width:520px;">
+            <thead><tr>
+              <th style="width:74px;">Giorno</th>
+              <th>Piano Firenze</th>
+              <th>Strava live</th>
+              <th style="width:120px;">Gear</th>
+              <th style="width:70px;text-align:center;">Voto</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <div class="m-day-cards">${mobileCards}</div>
       </div>`;
     wrap.appendChild(card);
   });
