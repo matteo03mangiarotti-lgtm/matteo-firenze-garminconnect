@@ -1,0 +1,25 @@
+name: Fetch ICS Calendar
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # ogni ora
+  workflow_dispatch:        # manuale dal sito GitHub
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download ICS
+        run: |
+          curl -L "https://calendar.google.com/calendar/ical/582a037b21336f43f0efe25d1a14ce62b4ecb4b0af06724d5f0fcaf4bf19d878%40group.calendar.google.com/public/basic.ics" \
+            -o piano.ics --fail --silent --show-error
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add piano.ics
+          git diff --staged --quiet || git commit -m "chore: aggiorna piano.ics [skip ci]"
+          git push

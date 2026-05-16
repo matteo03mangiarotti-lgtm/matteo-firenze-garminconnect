@@ -1,4 +1,4 @@
-const CACHE_NAME = 'matteo-firenze-v4';
+const CACHE_NAME = 'matteo-firenze-v5';
 const URLS_TO_CACHE = [
   './',
   './index.html',
