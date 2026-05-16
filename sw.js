@@ -1,24 +1,7 @@
-const CACHE_NAME = 'matteo-firenze-v7';
-const URLS_TO_CACHE = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icons/icon-192.svg',
-  './icons/icon-512.svg',
-  'https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap',
-  'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js'
-];
+const CACHE_NAME = 'matteo-firenze-v8';
 
-// Install: metti in cache le risorse principali
+// Install: skip waiting immediately
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(URLS_TO_CACHE).catch(err => {
-        console.warn('Cache parziale (alcune risorse esterne potrebbero non essere disponibili):', err);
-      });
-    })
-  );
   self.skipWaiting();
 });
 
@@ -32,42 +15,55 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// Fetch: network-first per Strava API, cache-first per il resto
+// Fetch: network-first per tutto tranne le risorse esterne pesanti
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // Strava API: sempre network (non cacheabile per dati freschi)
+  // Strava API: sempre network
   if (url.hostname === 'www.strava.com') {
-    event.respondWith(fetch(event.request).catch(() => {
-      return new Response(JSON.stringify({ error: 'offline' }), {
+    event.respondWith(fetch(event.request).catch(() =>
+      new Response(JSON.stringify({ error: 'offline' }), {
         headers: { 'Content-Type': 'application/json' }
-      });
-    }));
+      })
+    ));
     return;
   }
 
-  // Tutto il resto: cache-first con fallback network
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-      return fetch(event.request).then(response => {
-        if (!response || response.status !== 200 || response.type === 'opaque') {
+  // Font e librerie esterne: cache-first (cambiano raramente)
+  if (url.hostname === 'fonts.googleapis.com' ||
+      url.hostname === 'fonts.gstatic.com' ||
+      url.hostname === 'cdn.jsdelivr.net' ||
+      url.hostname === 'cdnjs.cloudflare.com') {
+    event.respondWith(
+      caches.match(event.request).then(cached => {
+        if (cached) return cached;
+        return fetch(event.request).then(response => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
           return response;
-        }
+        });
+      })
+    );
+    return;
+  }
+
+  // Tutto il resto (index.html, piano.ics, sw.js ecc): network-first
+  event.respondWith(
+    fetch(event.request).then(response => {
+      // Aggiorna la cache con la versione fresca
+      if (response && response.status === 200) {
         const clone = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-        return response;
-      }).catch(() => {
-        // Fallback offline page se tutto fallisce
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-      });
+      }
+      return response;
+    }).catch(() => {
+      // Offline: usa la cache
+      return caches.match(event.request);
     })
   );
 });
 
-// Gestione messaggi (es. force refresh)
+// Messaggi
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
