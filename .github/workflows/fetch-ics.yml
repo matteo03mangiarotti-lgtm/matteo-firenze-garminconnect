@@ -2,18 +2,21 @@ name: Fetch ICS Calendar
 
 on:
   schedule:
-    - cron: '0 * * * *'   # ogni ora
-  workflow_dispatch:        # manuale dal sito GitHub
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
       - name: Download ICS
         run: |
-          curl -L "https://calendar.google.com/calendar/ical/582a037b21336f43f0efe25d1a14ce62b4ecb4b0af06724d5f0fcaf4bf19d878%40group.calendar.google.com/public/basic.ics" \
+          curl -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+            "https://calendar.google.com/calendar/ical/582a037b21336f43f0efe25d1a14ce62b4ecb4b0af06724d5f0fcaf4bf19d878@group.calendar.google.com/public/basic.ics" \
             -o piano.ics --fail --silent --show-error
 
       - name: Commit if changed
