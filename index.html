@@ -378,9 +378,23 @@ const SL=s=>s>=8?'Ottimo':s>=6?'Buono':s>=4?'Rivedere':'Critico';
 // Stima km previsti per tipo
 function plannedKm(p){
   const s=p.summary.toLowerCase();
-  const m=s.match(/(\d+)\s*km/);if(m)return parseInt(m[1]);
-  const min=s.match(/(\d+)'/);
-  if(min){const t=parseInt(min[1]);return Math.round(t*3.3/60*10)/10;}
+  // 1. km espliciti nel titolo
+  const mKm=s.match(/(\d+)\s*km/);if(mKm)return parseInt(mKm[1]);
+  // 2. minuti nel titolo → stima km con passo medio del range del piano
+  const mMin=s.match(/(\d+)['′]/);
+  if(mMin){
+    const t=parseInt(mMin[1]); // minuti
+    // Estrai range passo dal desc (es. "5:10–5:30/km")
+    const mPace=p.desc&&p.desc.match(/(\d):(\d{2})[–\-](\d):(\d{2})/);
+    if(mPace){
+      const minPace=(parseInt(mPace[1])*60+parseInt(mPace[2]));
+      const maxPace=(parseInt(mPace[3])*60+parseInt(mPace[4]));
+      const avgPace=(minPace+maxPace)/2; // sec/km
+      return Math.round(t*60/avgPace*10)/10;
+    }
+    // fallback: 5:20/km = 320 sec/km
+    return Math.round(t*60/320*10)/10;
+  }
   return 8;
 }
 
@@ -632,7 +646,14 @@ function buildDashboard(activities,stats,gearMap,gearTotals,lapsMap={}){
         const c=SC(sv.score);
         const z=sv.fc?getZone(sv.fc):null;
         const hrT=sv.hrTarget;
-        const tipHtml=`<strong>${sv.score}/10 — ${SL(sv.score)}</strong>${sv.breakdown?`<div class="tip-row"><span>FC</span><span style="color:${SC(sv.breakdown.fc)};">${sv.breakdown.fc}/10</span></div><div class="tip-row"><span>Passo</span><span style="color:${SC(sv.breakdown.passo)};">${sv.breakdown.passo}/10</span></div><div class="tip-row"><span>Distanza</span><span style="color:${SC(sv.breakdown.dist)};">${sv.breakdown.dist}/10</span></div><div class="tip-row"><span>Piano</span><span style="color:${SC(sv.breakdown.piano)};">${sv.breakdown.piano}/10</span></div><hr style="margin:5px 0;border:none;border-top:1px solid var(--border2);">`:''}${sv.fc?`<div style="margin-bottom:4px;">${zoneChip(sv.fc)} vs target ${hrT?hrT[0]+'-'+hrT[1]+' bpm':''}</div>`:''}<div style="font-size:10px;color:var(--text2);line-height:1.4;">${sv.note}</div>`;
+        const bd=sv.breakdown||{};
+        const bdHtml=[
+          bd.fc!=null?`<div class="tip-row"><span>FC</span><span style="color:${SC(bd.fc)};">${bd.fc}/10</span></div>`:'',
+          bd.passo!=null?`<div class="tip-row"><span>Passo</span><span style="color:${SC(bd.passo)};">${bd.passo}/10</span></div>`:'',
+          bd.dist!=null?`<div class="tip-row"><span>Distanza</span><span style="color:${SC(bd.dist)};">${bd.dist}/10</span></div>`:'',
+          bd.lap!=null?`<div class="tip-row"><span>Lap veloci</span><span style="color:${SC(bd.lap)};">${bd.lap}/10</span></div>`:'',
+        ].filter(x=>x).join('');
+        const tipHtml=`<strong>${sv.score}/10 — ${SL(sv.score)}</strong>${bdHtml?bdHtml+'<hr style="margin:5px 0;border:none;border-top:1px solid var(--border2);">':""}${sv.fc?`<div style="margin-bottom:4px;">${zoneChip(sv.fc)} vs target ${hrT?hrT[0]+'-'+hrT[1]+' bpm':''}</div>`:""}<div style="font-size:10px;color:var(--text2);line-height:1.4;">${sv.note}</div>`;
         scoreCell+=`<div class="sc-wrap" data-tip="${encodeURIComponent(tipHtml)}"><div class="sc-circle" style="background:${c}18;color:${c};">${sv.score}</div><div class="sc-lbl">${SL(sv.score)}</div></div>`;
       } else if(p.type==='rest'){scoreCell+='<span style="color:var(--text3);font-size:13px;">—</span>';}
       else{scoreCell+='<span style="color:var(--text3);font-family:var(--mono);font-size:12px;">?</span>';}
