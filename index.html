@@ -260,9 +260,9 @@ function parseICS(text){
     const fcRaw=getField(descRaw,'FC');
     const gelRaw=getField(descRaw,'Gel');
 
-    // Map Tipo → type
+    // Map tipo: se il titolo contiene "riposo" → rest, sempre
     let type='easy';
-    if(/riposo|rest/i.test(tipo))type='rest';
+    if(/riposo/i.test(summary))type='rest';
     else if(/recovery|recupero/i.test(tipo))type='recovery';
     else if(/lungo/i.test(tipo))type='lungo';
     else if(/qualit|soglia|medio|steady|ripetute|tempo|progressivo|brillante/i.test(tipo))type='qualita';
@@ -518,7 +518,7 @@ function buildDashboard(activities,stats,gearMap,gearTotals){
 
   sortedW.forEach((mon,wi)=>{
     const days=weekMap[mon];
-    const runDays=days.filter(d=>d.type!=='rest');
+    const runDays=days.filter(d=>d.type!=='rest'&&d.type!=='recovery');
     const done=runDays.filter(d=>byDate[d.date]&&byDate[d.date].some(a=>['Run','Walk'].includes(a.type)));
     const end=new Date(mon);end.setDate(end.getDate()+6);
     const isCurr=wi===currentWeekIdx;
@@ -593,6 +593,7 @@ function buildDashboard(activities,stats,gearMap,gearTotals){
           <div class="act-m">${fmtD(real.distance)} · ${fmtT(real.moving_time)} · ${fmtP(spk)}/km</div>${hrBadge}`;
         badge=p.type==='rest'?'<span class="bdg b-bonus">+ bonus</span>':'<span class="bdg b-ok">✓</span>';
       } else if(p.type==='rest'){realHtml='<span class="act-e">—</span>';badge='<span class="bdg b-rest">riposo</span>';}
+      else if(p.type==='recovery'&&!real){realHtml='<span class="act-e">—</span>';badge='<span class="bdg b-rest">recovery</span>';}
       else if(isToday){realHtml='<span class="act-e" style="color:var(--orange);">Da fare oggi</span>';badge='<span class="bdg b-today">OGGI</span>';}
       else if(isFut){realHtml='<span class="act-e">In programma</span>';}
       else{realHtml='<span class="act-e" style="color:var(--amber);">Non registrata</span>';badge='<span class="bdg b-miss">⚠ manca</span>';}
@@ -660,7 +661,7 @@ function buildDashboard(activities,stats,gearMap,gearTotals){
   // ── COMPLIANCE TAB ──
   const compW=sortedW.map((mon,wi)=>{
     const days=weekMap[mon];
-    const run=days.filter(d=>d.type!=='rest');
+    const run=days.filter(d=>d.type!=='rest'&&d.type!=='recovery');
     const dn=run.filter(d=>byDate[d.date]&&byDate[d.date].some(a=>['Run','Walk'].includes(a.type)));
     const kmR=days.reduce((s,p)=>(s+(byDate[p.date]||[]).reduce((ss,a)=>ss+a.distance/1000,0)),0);
     const kmP=run.reduce((s,p)=>s+plannedKm(p),0);
