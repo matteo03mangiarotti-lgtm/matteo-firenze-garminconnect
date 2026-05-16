@@ -361,14 +361,7 @@ const GEL_MAP={
   "2026-11-15":{count:2,note:"2 gel: 60' + 90'. Sempre con acqua."},
   "2026-11-22":{count:1,note:"1 gel a 60'. Opzionale, utile per testare senza stress."},
 };
-const VOTI={
-  "2026-04-28":{score:6,fc:155,hrTarget:[129,155],breakdown:{fc:5,passo:8,dist:7,piano:6},note:"FC borderline (155→target ≤155). Passo 5:42/km OK. Distanza 7km vs 30' previsti: bene. Settimana recovery post-maratona."},
-  "2026-04-29":{score:8,fc:147,hrTarget:[129,155],breakdown:{fc:9,passo:7,dist:8,piano:8},note:"FC 147 bpm perfetta per recovery. Passo 5:10 leggermente rapido ma FC bassa giustifica. Ottima sessione."},
-  "2026-05-01":{score:6,fc:155,hrTarget:[129,155],breakdown:{fc:6,passo:6,dist:5,piano:6},note:"10km invece di ~6-7 previsti. FC 155 al limite, passo 5:11 sopra range. Troppo volume in sett. recovery."},
-  "2026-05-02":{score:5,fc:158,hrTarget:[129,155],breakdown:{fc:4,passo:7,dist:4,piano:5},note:"Piano: 30' easy. Reale: 54' con FC 158 in compagnia. FC sopra target Z2, troppo lungo."},
-  "2026-05-03":{score:4,fc:170,hrTarget:[129,155],breakdown:{fc:2,passo:6,dist:7,piano:4},note:"🚨 FC 170bpm = Z3 in sessione che doveva essere Z1-Z2. Zona anaerobica in week recovery."},
-  "2026-05-05":{score:3,fc:173,hrTarget:[129,155],breakdown:{fc:2,passo:5,dist:6,piano:3},note:"🚨 FC 173bpm=Z3 alta, passo 5:06/km. Piano: Z1-Z2, 5:20-5:40/km. Sessione da medio, non da easy."},
-};
+const VOTI={};  // tutti i voti calcolati automaticamente da autoScore
 
 // ── HELPERS ──
 const fmtP=s=>{const m=Math.floor(s/60),sc=Math.round(s%60);return m+"'"+String(sc).padStart(2,'0')+'"';};
