@@ -391,38 +391,113 @@ function plannedKm(p){
   return 8;
 }
 
-// Score automatico avanzato
-function autoScore(plan,act){
+// ── SCORING ──
+
+// Punteggio FC (0-10): quanto la FC media è nel range target
+function scoreFC(hr, hrMin, hrMax){
+  if(!hr||!hrMax)return 7;
+  const mid=(hrMin+hrMax)/2;
+  const range=(hrMax-hrMin)/2;
+  const delta=Math.abs(hr-mid);
+  if(delta<=range*0.5)return 10;       // nel centro del range
+  if(delta<=range)return 9;            // nel range
+  const over=hr-hrMax;
+  if(over<=0)return 9;                 // sotto il max → ok
+  if(over<=5)return 8;
+  if(over<=10)return 6;
+  if(over<=15)return 4;
+  if(over<=25)return 2;
+  return 1;
+}
+
+// Punteggio distanza (0-10): entro ±10% = 10
+function scoreDist(actual, target){
+  if(!target)return 7;
+  const ratio=actual/target;
+  const diff=Math.abs(1-ratio);
+  if(diff<=0.10)return 10;
+  if(diff<=0.15)return 8;
+  if(diff<=0.25)return 6;
+  if(diff<=0.35)return 4;
+  return 2;
+}
+
+// Punteggio passo (0-10): estrae range dal testo del piano
+function scorePasso(spk, plan){
+  // Cerca "Ritmo: X:XX–X:XX/km" nel desc
+  const m=plan.desc&&plan.desc.match(/(\d):(\d{2})[–\-](\d):(\d{2})/);
+  if(!m)return 7;
+  const minPace=(parseInt(m[1])*60+parseInt(m[2]));
+  const maxPace=(parseInt(m[3])*60+parseInt(m[4]));
+  if(spk>=minPace&&spk<=maxPace)return 10;
+  const over=spk-maxPace;   // positivo = più lento del target
+  const under=minPace-spk;  // positivo = più veloce del target
+  if(over>0){if(over<=15)return 8;if(over<=30)return 6;if(over<=60)return 4;return 2;}
+  if(under>0){if(under<=15)return 8;if(under<=30)return 6;if(under<=60)return 4;return 2;}
+  return 7;
+}
+
+// Punteggio lap veloci per qualità (0-10)
+function scoreLaps(laps, plan){
+  if(!laps||!laps.length)return null;
+  // Filtra lap "veloci" (esclude i recuperi: lap con passo > 5:00/km = 300s/km)
+  const fastLaps=laps.filter(l=>l.distance>200&&(l.moving_time/(l.distance/1000))<310);
+  if(!fastLaps.length)return null;
+  const avgFastPace=fastLaps.reduce((s,l)=>s+l.moving_time/(l.distance/1000),0)/fastLaps.length;
+  const avgFastHr=fastLaps.reduce((s,l)=>s+(l.average_heartrate||0),0)/fastLaps.length;
+  // Usa passo dei lap veloci vs range piano
+  return scorePasso(avgFastPace,plan);
+}
+
+// Score automatico con pesi per tipo
+function autoScore(plan, act, laps){
   if(!act||plan.type==='rest')return null;
   const hr=act.average_heartrate||0;
   const spk=act.moving_time/(act.distance/1000);
   const distKm=act.distance/1000;
   const targetKm=plannedKm(plan);
-  let score=7,breakdown={fc:7,passo:7,dist:7,piano:7};
 
-  // FC vs target zona
-  if(plan.hrMax){
-    const over=hr-plan.hrMax;
-    if(over>20){breakdown.fc=2;score-=3;}
-    else if(over>10){breakdown.fc=4;score-=2;}
-    else if(over>0){breakdown.fc=6;score-=1;}
-    else if(over<=-5){breakdown.fc=9;score+=1;}
-    else{breakdown.fc=8;}
+  const fc=scoreFC(hr,plan.hrMin||129,plan.hrMax||198);
+  const dist=scoreDist(distKm,targetKm);
+  const passo=scorePasso(spk,plan);
+
+  let score, breakdown;
+
+  if(plan.type==='recovery'){
+    // FC 50%, Passo 30%, Distanza 20%
+    score=fc*0.5+passo*0.3+dist*0.2;
+    breakdown={fc,passo,dist};
+  } else if(plan.type==='qualita'){
+    // FC 30%, Lap veloci 50%, Passo medio 20%
+    const lapScore=scoreLaps(laps,plan);
+    if(lapScore!==null){
+      score=fc*0.3+lapScore*0.5+passo*0.2;
+      breakdown={fc,lap:lapScore,passo};
+    } else {
+      // Nessun lap → fallback FC 40%, Passo 40%, Dist 20%
+      score=fc*0.4+passo*0.4+dist*0.2;
+      breakdown={fc,passo,dist};
+    }
+  } else {
+    // easy / lungo: FC 30%, Passo 50%, Distanza 20%
+    score=fc*0.3+passo*0.5+dist*0.2;
+    breakdown={fc,passo,dist};
   }
 
-  // Distanza vs target
-  const distRatio=distKm/targetKm;
-  if(distRatio>1.3){breakdown.dist=5;score-=1;}
-  else if(distRatio>=0.85&&distRatio<=1.15){breakdown.dist=9;score+=1;}
-  else if(distRatio<0.7){breakdown.dist=5;score-=1;}
-
-  return{score:Math.max(1,Math.min(10,score)),fc:hr,hrTarget:[plan.hrMin||129,plan.hrMax||198],breakdown,note:autoNote(plan,act,hr,spk)};
+  score=Math.round(Math.max(1,Math.min(10,score)));
+  const note=autoNote(plan,act,hr,spk,laps);
+  return{score,fc:hr,hrTarget:[plan.hrMin||129,plan.hrMax||198],breakdown,note};
 }
 
-function autoNote(plan,act,hr,spk){
+function autoNote(plan,act,hr,spk,laps){
   const parts=[];
-  if(plan.hrMax&&hr>plan.hrMax+10)parts.push(`FC ${hr}bpm sopra target (max ${plan.hrMax}bpm)`);
-  else if(plan.hrMax&&hr<=plan.hrMax)parts.push(`FC ${hr}bpm nel range ✓`);
+  if(plan.hrMax&&hr>plan.hrMax+10)parts.push(`FC ${Math.round(hr)}bpm sopra target (max ${plan.hrMax}bpm)`);
+  else if(plan.hrMax&&hr<=plan.hrMax)parts.push(`FC ${Math.round(hr)}bpm nel range ✓`);
+  // Lap veloci per qualità
+  if(plan.type==='qualita'&&laps&&laps.length){
+    const fast=laps.filter(l=>l.distance>200&&(l.moving_time/(l.distance/1000))<310);
+    if(fast.length)parts.push(`${fast.length} lap veloci rilevati`);
+  }
   if(plan.fcDesc)parts.push(plan.fcDesc.replace('FC:','').trim());
   return parts.join('. ')||'Sessione completata.';
 }
@@ -450,6 +525,13 @@ async function fetchGear(token,gearId){
     const r=await fetch(`https://www.strava.com/api/v3/gear/${gearId}`,{headers:{Authorization:'Bearer '+token}});
     return r.json();
   }catch{return null;}
+}
+
+async function fetchLaps(token, actId){
+  try{
+    const r=await fetch(`https://www.strava.com/api/v3/activities/${actId}/laps`,{headers:{Authorization:'Bearer '+token}});
+    return r.json();
+  }catch{return [];}
 }
 
 // ── GEAR CACHE & RUNNING TOTALS ──
@@ -499,7 +581,7 @@ function buildGearTotals(activities){
 }
 
 // ── BUILD DASHBOARD ──
-function buildDashboard(activities,stats,gearMap,gearTotals){
+function buildDashboard(activities,stats,gearMap,gearTotals,lapsMap={}){
   const byDate={};
   (activities||[]).forEach(a=>{const ds=a.start_date_local.slice(0,10);if(!byDate[ds])byDate[ds]=[];byDate[ds].push(a);});
 
@@ -537,7 +619,7 @@ function buildDashboard(activities,stats,gearMap,gearTotals){
 
       // ── Voto ──
       let sv=VOTI[p.date]||null;
-      if(!sv&&real&&p.type!=='rest'){sv=autoScore(p,real);}
+      if(!sv&&real&&p.type!=='rest'){sv=autoScore(p,real,lapsMap[real.id]||[]);}
       if(sv)allScoresMap[p.date]=sv.score;
 
       // ── Gear cell ──
@@ -762,7 +844,16 @@ async function sync(){
     }));
     const gearTotals=buildGearTotals(acts);
 
-    buildDashboard(acts,stats,gearMap,gearTotals);
+    // Fetch laps solo per attività di tipo Run degli ultimi mesi (per il voto qualità)
+    document.getElementById('ld-txt').textContent='Caricamento lap...';
+    const lapsMap={};
+    const qualActs=acts.filter(a=>a.type==='Run'&&a.has_heartrate);
+    await Promise.all(qualActs.map(async a=>{
+      const laps=await fetchLaps(token,a.id);
+      if(Array.isArray(laps)&&laps.length)lapsMap[a.id]=laps;
+    }));
+
+    buildDashboard(acts,stats,gearMap,gearTotals,lapsMap);
     setStatus('ok','Sincronizzato');
   }catch(e){
     console.warn(e.message);
