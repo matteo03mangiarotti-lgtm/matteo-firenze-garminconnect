@@ -236,7 +236,11 @@ const RACE=new Date('2026-11-29');
 document.getElementById('days-pill').textContent=Math.ceil((RACE-new Date())/864e5)+' giorni';
 
 const ICS_URL='https://calendar.google.com/calendar/ical/582a037b21336f43f0efe25d1a14ce62b4ecb4b0af06724d5f0fcaf4bf19d878%40group.calendar.google.com/public/basic.ics';
-const ICS_PROXY='https://corsproxy.io/?'+encodeURIComponent(ICS_URL);
+const ICS_PROXIES=[
+  'https://api.allorigins.win/raw?url='+encodeURIComponent(ICS_URL),
+  'https://corsproxy.io/?'+encodeURIComponent(ICS_URL),
+  'https://thingproxy.freeboard.io/fetch/'+ICS_URL,
+];
 
 // ── ICS PARSER ──
 function parseICS(text){
@@ -299,9 +303,16 @@ let PIANO=[];
 async function loadPiano(){
   try{
     setStatus('loading','Caricamento piano dal calendario…');
-    const r=await fetch(ICS_PROXY,{cache:'no-store'});
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    const text=await r.text();
+    let text=null;
+    for(const proxy of ICS_PROXIES){
+      try{
+        const r=await fetch(proxy,{cache:'no-store'});
+        if(!r.ok)continue;
+        const t=await r.text();
+        if(t.includes('BEGIN:VCALENDAR')){text=t;break;}
+      }catch(e){console.warn('Proxy fallito:',proxy,e);}
+    }
+    if(!text)throw new Error('Tutti i proxy falliti');
     PIANO=parseICS(text);
     console.log('Piano caricato dal calendario: '+PIANO.length+' giorni');
     // Popola GEL_MAP dinamicamente dai dati ICS
