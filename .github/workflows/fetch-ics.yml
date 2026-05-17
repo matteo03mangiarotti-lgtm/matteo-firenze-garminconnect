@@ -16,7 +16,7 @@ jobs:
       - name: Download ICS
         run: |
           curl -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-            "https://calendar.google.com/calendar/ical/1cc57ba6628e550f3e56cf6eccacbd1bcdd983c2845a20b88a563bdfe3fb165b@group.calendar.google.com/private-66416a86e995cde12eaf88df44c41197/basic.ics" \
+            "https://calendar.google.com/calendar/ical/e6dd5424d472964166d38a8ea1baa2ba7eb64c73cb34eee5daacdeea9fac5d24@group.calendar.google.com/private-c880a3246965da7209e2e48eaf500a80/basic.ics" \
             -o piano.ics --fail --silent --show-error
 
       - name: Commit if changed
