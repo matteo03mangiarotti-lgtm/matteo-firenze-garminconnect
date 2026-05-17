@@ -650,13 +650,22 @@ function buildDashboard(activities,stats,gearMap,gearTotals,lapsMap={}){
         const z=sv.fc?getZone(sv.fc):null;
         const hrT=sv.hrTarget;
         const bd=sv.breakdown||{};
-        const bdHtml=[
-          bd.fc!=null?`<div class="tip-row"><span>FC</span><span style="color:${SC(bd.fc)};">${bd.fc}/10</span></div>`:'',
-          bd.passo!=null?`<div class="tip-row"><span>Passo</span><span style="color:${SC(bd.passo)};">${bd.passo}/10</span></div>`:'',
-          bd.dist!=null?`<div class="tip-row"><span>Distanza</span><span style="color:${SC(bd.dist)};">${bd.dist}/10</span></div>`:'',
-          bd.lap!=null?`<div class="tip-row"><span>Lap veloci</span><span style="color:${SC(bd.lap)};">${bd.lap}/10</span></div>`:'',
-        ].filter(x=>x).join('');
-        const tipHtml=`<strong>${sv.score}/10 — ${SL(sv.score)}</strong>${bdHtml?bdHtml+'<hr style="margin:5px 0;border:none;border-top:1px solid var(--border2);">':""}${sv.fc?`<div style="margin-bottom:4px;">${zoneChip(sv.fc)} vs target ${hrT?hrT[0]+'-'+hrT[1]+' bpm':''}</div>`:""}<div style="font-size:10px;color:var(--text2);line-height:1.4;">${sv.note}</div>`;
+        // Pesi per tipo sessione
+        const weights=p.type==='recovery'?{fc:50,passo:30,dist:20}:
+                      p.type==='qualita'?{fc:30,lap:50,passo:20}:
+                      {fc:30,passo:50,dist:20};
+        const wLabels={fc:'FC',passo:'Passo',dist:'Distanza',lap:'Lap veloci'};
+        const bdHtml=Object.entries(weights).map(([k,w])=>{
+          const v=bd[k];
+          if(v==null)return '';
+          return `<div class="tip-row"><span>${wLabels[k]} <span style="color:var(--text3);font-size:9px;">(${w}%)</span></span><span style="color:${SC(v)};">${v}/10</span></div>`;
+        }).filter(x=>x).join('');
+        const fcLine=sv.fc?`<div style="font-size:10px;color:var(--text2);">FC ${Math.round(sv.fc)} bpm · target ${hrT?hrT[0]+'-'+hrT[1]:''} bpm</div>`:'';
+        const formulaLabel=p.type==='recovery'?'FC×50% + Passo×30% + Distanza×20%':
+                           p.type==='qualita'?'FC×30% + Lap×50% + Passo×20%':
+                           'FC×30% + Passo×50% + Distanza×20%';
+        const formulaLine=`<div style="font-size:9px;color:var(--text3);margin-top:4px;font-family:var(--mono);">Voto: ${formulaLabel}</div>`;
+        const tipHtml=`<strong>${sv.score}/10 — ${SL(sv.score)}</strong>${bdHtml?bdHtml+'<hr style="margin:5px 0;border:none;border-top:1px solid var(--border2);">':""}${fcLine}${formulaLine}`;
         scoreCell+=`<div class="sc-wrap" data-tip="${encodeURIComponent(tipHtml)}"><div class="sc-circle" style="background:${c}18;color:${c};">${sv.score}</div><div class="sc-lbl">${SL(sv.score)}</div></div>`;
       } else if(p.type==='rest'){scoreCell+='<span style="color:var(--text3);font-size:13px;">—</span>';}
       else{scoreCell+='<span style="color:var(--text3);font-family:var(--mono);font-size:12px;">?</span>';}
