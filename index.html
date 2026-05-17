@@ -245,10 +245,13 @@ function parseICS(text){
   const blocks=text.split('BEGIN:VEVENT');
   for(let i=1;i<blocks.length;i++){
     const b=blocks[i];
-    const get=k=>{const m=b.match(new RegExp(k+'[^:]*:([^\r\n]+)'));return m?m[1].trim().replace(/\\n/g,'\n').replace(/\\,/g,',').replace(/\\;/g,';').replace(/\\\\/g,'\\'):'';};
+    const get=k=>{const m=b.match(new RegExp(k+'[^:]*:([^\r\n]+)'));if(!m)return '';let v=m[1].trim();v=v.replace(/\\n/g,'\n').replace(/\\,/g,',').replace(/\\;/g,';').replace(/\\\\/g,'\\');return v;};
     const dtraw=get('DTSTART');
     if(!dtraw)continue;
-    const dateStr=dtraw.slice(0,4)+'-'+dtraw.slice(4,6)+'-'+dtraw.slice(6,8);
+    // Handle both "20260922T060000Z" and "20260922" formats
+    const dtclean=dtraw.replace(/T.*$/,'');
+    if(dtclean.length<8)continue;
+    const dateStr=dtclean.slice(0,4)+'-'+dtclean.slice(4,6)+'-'+dtclean.slice(6,8);
     const summary=get('SUMMARY');
     const descRaw=get('DESCRIPTION');
 
