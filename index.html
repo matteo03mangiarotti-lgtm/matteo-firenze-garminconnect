@@ -858,16 +858,7 @@ async function sync(){
     }));
     const gearTotals=buildGearTotals(acts);
 
-    // Fetch laps solo per attività di tipo Run degli ultimi mesi (per il voto qualità)
-    document.getElementById('ld-txt').textContent='Caricamento lap...';
-    const lapsMap={};
-    const qualActs=acts.filter(a=>a.type==='Run'&&a.has_heartrate);
-    await Promise.all(qualActs.map(async a=>{
-      const laps=await fetchLaps(token,a.id);
-      if(Array.isArray(laps)&&laps.length)lapsMap[a.id]=laps;
-    }));
-
-    buildDashboard(acts,stats,gearMap,gearTotals,lapsMap);
+    buildDashboard(acts,stats,gearMap,gearTotals,{});
     setStatus('ok','Sincronizzato');
   }catch(e){
     console.warn(e.message);
