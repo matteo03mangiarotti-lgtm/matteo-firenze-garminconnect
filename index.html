@@ -610,7 +610,7 @@ function buildDashboard(activities,stats,gearMap,gearTotals,lapsMap={}){
 
   sortedW.forEach((mon,wi)=>{
     const days=weekMap[mon];
-    const runDays=days.filter(d=>d.type!=='rest'&&d.type!=='recovery');
+    const runDays=days.filter(d=>d.type!=='rest');
     const done=runDays.filter(d=>byDate[d.date]&&byDate[d.date].some(a=>['Run','Walk'].includes(a.type)));
     const end=new Date(mon);end.setDate(end.getDate()+6);
     const isCurr=wi===currentWeekIdx;
@@ -760,7 +760,7 @@ function buildDashboard(activities,stats,gearMap,gearTotals,lapsMap={}){
   // ── COMPLIANCE TAB ──
   const compW=sortedW.map((mon,wi)=>{
     const days=weekMap[mon];
-    const run=days.filter(d=>d.type!=='rest'&&d.type!=='recovery');
+    const run=days.filter(d=>d.type!=='rest');
     const dn=run.filter(d=>byDate[d.date]&&byDate[d.date].some(a=>['Run','Walk'].includes(a.type)));
     const kmR=days.reduce((s,p)=>(s+(byDate[p.date]||[]).reduce((ss,a)=>ss+a.distance/1000,0)),0);
     const kmP=run.reduce((s,p)=>s+plannedKm(p),0);
