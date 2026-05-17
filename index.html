@@ -375,7 +375,7 @@ const getWMon=ds=>{const d=new Date(ds),dy=d.getDay()===0?6:d.getDay()-1,m=new D
 const DN=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
 const TC={easy:'#1d4ed8',recovery:'#15803d',lungo:'#b45309',qualita:'#FC4C02',rest:'#a8a29e'};
 const TL={easy:'Facile',recovery:'Recovery',lungo:'Lungo',qualita:'Qualità',rest:'Riposo'};
-const SC=s=>s>=8?'#15803d':s>=6?'#b45309':s>=4?'#FC4C02':'#b91c1c';
+const SC=s=>s>=9?'#15803d':s>=7?'#4ade80':s>=5?'#facc15':s>=3?'#f97316':'#dc2626';
 const SL=s=>s>=8?'Ottimo':s>=6?'Buono':s>=4?'Rivedere':'Critico';
 
 // Stima km previsti per tipo
@@ -615,7 +615,7 @@ function buildDashboard(activities,stats,gearMap,gearTotals,lapsMap={}){
     const end=new Date(mon);end.setDate(end.getDate()+6);
     const isCurr=wi===currentWeekIdx;
     const pct=runDays.length?Math.round(done.length/runDays.length*100):null;
-    const pctCol=pct===null?'var(--text3)':pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+    const pctCol=pct===null?'var(--text3)':pct>=84?'#15803d':pct>=67?'#4ade80':pct>=50?'#facc15':pct>=34?'#f97316':'#dc2626';
     const pctStr=pct!==null?pct+'%':isCurr?'in corso':'—';
 
     const rowsAndCards=days.map(p=>{
