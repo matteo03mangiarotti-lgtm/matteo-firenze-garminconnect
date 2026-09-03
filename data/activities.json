@@ -1,6 +1,339 @@
 {
-  "last_updated": "2026-08-21T06:00:14Z",
+  "last_updated": "2026-08-25T13:38:13Z",
   "activities": [
+    {
+      "garmin_id": 24106168980,
+      "date": "2026-08-25",
+      "start_time": "2026-08-25 08:18:26",
+      "name": "Saint-Florent Running",
+      "type": "running",
+      "distance_m": 10194,
+      "distance_km": 10.19,
+      "duration_s": 3192,
+      "avg_hr": 153,
+      "avg_pace_s_km": 313,
+      "avg_pace_fmt": "5:13",
+      "calories": 590.0,
+      "elevation_gain": 159.0,
+      "gear_name": null,
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 324,
+          "avg_pace_s_km": 324,
+          "avg_pace_fmt": "5:23",
+          "avg_hr": 138,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 312,
+          "avg_pace_s_km": 312,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 156,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 313,
+          "avg_pace_s_km": 313,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 167,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 311,
+          "avg_pace_s_km": 311,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 168,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 307,
+          "avg_pace_s_km": 307,
+          "avg_pace_fmt": "5:06",
+          "avg_hr": 173,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 317,
+          "avg_pace_s_km": 317,
+          "avg_pace_fmt": "5:17",
+          "avg_hr": 151,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 318,
+          "avg_pace_s_km": 318,
+          "avg_pace_fmt": "5:17",
+          "avg_hr": 141,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 315,
+          "avg_pace_s_km": 315,
+          "avg_pace_fmt": "5:15",
+          "avg_hr": 140,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 313,
+          "avg_pace_s_km": 313,
+          "avg_pace_fmt": "5:12",
+          "avg_hr": 140,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 303,
+          "avg_pace_s_km": 303,
+          "avg_pace_fmt": "5:03",
+          "avg_hr": 155,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 194,
+          "duration_s": 60,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 154,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "start_lat": 42.68006413243711,
+      "start_lon": 9.299179343506694,
+      "weather_temp": 26,
+      "weather_condition": "Prevalentemente sereno",
+      "fetched_at": "2026-08-25T13:38:02Z",
+      "score": null,
+      "fc_max_at_date": 205
+    },
+    {
+      "garmin_id": 24064827199,
+      "date": "2026-08-21",
+      "start_time": "2026-08-21 20:02:01",
+      "name": "Broni Running",
+      "type": "running",
+      "distance_m": 18107,
+      "distance_km": 18.11,
+      "duration_s": 5542,
+      "avg_hr": 146,
+      "avg_pace_s_km": 306,
+      "avg_pace_fmt": "5:06",
+      "calories": 1027.0,
+      "elevation_gain": 52.0,
+      "gear_name": null,
+      "gear_km": null,
+      "laps": [
+        {
+          "lap_index": 1,
+          "distance_m": 1000,
+          "duration_s": 330,
+          "avg_pace_s_km": 330,
+          "avg_pace_fmt": "5:29",
+          "avg_hr": 135,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 2,
+          "distance_m": 1000,
+          "duration_s": 310,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 144,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 3,
+          "distance_m": 1000,
+          "duration_s": 307,
+          "avg_pace_s_km": 307,
+          "avg_pace_fmt": "5:06",
+          "avg_hr": 145,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 4,
+          "distance_m": 1000,
+          "duration_s": 302,
+          "avg_pace_s_km": 302,
+          "avg_pace_fmt": "5:02",
+          "avg_hr": 148,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 5,
+          "distance_m": 1000,
+          "duration_s": 309,
+          "avg_pace_s_km": 309,
+          "avg_pace_fmt": "5:08",
+          "avg_hr": 149,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 6,
+          "distance_m": 1000,
+          "duration_s": 305,
+          "avg_pace_s_km": 305,
+          "avg_pace_fmt": "5:05",
+          "avg_hr": 143,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 7,
+          "distance_m": 1000,
+          "duration_s": 299,
+          "avg_pace_s_km": 299,
+          "avg_pace_fmt": "4:58",
+          "avg_hr": 145,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 8,
+          "distance_m": 1000,
+          "duration_s": 301,
+          "avg_pace_s_km": 301,
+          "avg_pace_fmt": "5:00",
+          "avg_hr": 145,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 9,
+          "distance_m": 1000,
+          "duration_s": 304,
+          "avg_pace_s_km": 304,
+          "avg_pace_fmt": "5:03",
+          "avg_hr": 146,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 10,
+          "distance_m": 1000,
+          "duration_s": 311,
+          "avg_pace_s_km": 311,
+          "avg_pace_fmt": "5:10",
+          "avg_hr": 147,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 11,
+          "distance_m": 1000,
+          "duration_s": 310,
+          "avg_pace_s_km": 310,
+          "avg_pace_fmt": "5:09",
+          "avg_hr": 149,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 12,
+          "distance_m": 1000,
+          "duration_s": 302,
+          "avg_pace_s_km": 302,
+          "avg_pace_fmt": "5:02",
+          "avg_hr": 140,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 13,
+          "distance_m": 1000,
+          "duration_s": 308,
+          "avg_pace_s_km": 308,
+          "avg_pace_fmt": "5:07",
+          "avg_hr": 146,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 14,
+          "distance_m": 1000,
+          "duration_s": 305,
+          "avg_pace_s_km": 305,
+          "avg_pace_fmt": "5:05",
+          "avg_hr": 147,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 15,
+          "distance_m": 1000,
+          "duration_s": 303,
+          "avg_pace_s_km": 303,
+          "avg_pace_fmt": "5:03",
+          "avg_hr": 152,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 16,
+          "distance_m": 1000,
+          "duration_s": 302,
+          "avg_pace_s_km": 302,
+          "avg_pace_fmt": "5:02",
+          "avg_hr": 152,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 17,
+          "distance_m": 1000,
+          "duration_s": 304,
+          "avg_pace_s_km": 304,
+          "avg_pace_fmt": "5:04",
+          "avg_hr": 151,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 18,
+          "distance_m": 1000,
+          "duration_s": 301,
+          "avg_pace_s_km": 301,
+          "avg_pace_fmt": "5:01",
+          "avg_hr": 153,
+          "intensity": "ACTIVE"
+        },
+        {
+          "lap_index": 19,
+          "distance_m": 107,
+          "duration_s": 30,
+          "avg_pace_s_km": 276,
+          "avg_pace_fmt": "4:35",
+          "avg_hr": 148,
+          "intensity": "ACTIVE"
+        }
+      ],
+      "start_lat": 45.06765662692487,
+      "start_lon": 9.264277601614594,
+      "weather_temp": 23,
+      "weather_condition": "Prevalentemente sereno",
+      "fetched_at": "2026-08-25T13:38:04Z",
+      "score": {
+        "score": 8.9,
+        "subscores": {
+          "hr": 10.0,
+          "pace": 4.3,
+          "distance": 10
+        },
+        "flags": [],
+        "notes": [],
+        "cap_applied": null,
+        "scoring_version": 7
+      },
+      "fc_max_at_date": 205
+    },
     {
       "garmin_id": 24052413516,
       "date": "2026-08-20",
@@ -15,7 +348,7 @@
       "avg_pace_fmt": "5:27",
       "calories": 505.0,
       "elevation_gain": 51.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -113,7 +446,7 @@
       "start_lon": 9.303545812144876,
       "weather_temp": 23,
       "weather_condition": "Rovesci leggeri",
-      "fetched_at": "2026-08-21T06:00:12Z",
+      "fetched_at": "2026-08-25T13:38:06Z",
       "score": {
         "score": 8.4,
         "subscores": {
@@ -142,7 +475,7 @@
       "avg_pace_fmt": "4:39",
       "calories": 660.0,
       "elevation_gain": 57.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -284,8 +617,8 @@
       "start_lat": 45.01573098823428,
       "start_lon": 9.299200717359781,
       "weather_temp": 26,
-      "weather_condition": "Prevalentemente sereno",
-      "fetched_at": "2026-08-20T06:00:17Z",
+      "weather_condition": "Sereno",
+      "fetched_at": "2026-08-25T13:38:09Z",
       "score": {
         "score": 9.1,
         "subscores": {
@@ -317,7 +650,7 @@
       "avg_pace_fmt": "4:52",
       "calories": 586.0,
       "elevation_gain": 10.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -422,9 +755,9 @@
       ],
       "start_lat": 45.01017554663122,
       "start_lon": 9.298912296071649,
-      "weather_temp": 34,
-      "weather_condition": "Prevalentemente sereno",
-      "fetched_at": "2026-08-19T06:00:14Z",
+      "weather_temp": 33,
+      "weather_condition": "Nuvoloso",
+      "fetched_at": "2026-08-25T13:38:11Z",
       "score": {
         "score": 8.7,
         "subscores": {
@@ -453,7 +786,7 @@
       "avg_pace_fmt": "4:54",
       "calories": 798.0,
       "elevation_gain": 27.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -578,7 +911,7 @@
       "start_lon": 9.041652576997876,
       "weather_temp": 35,
       "weather_condition": "Nuvoloso",
-      "fetched_at": "2026-08-19T06:00:16Z",
+      "fetched_at": "2026-08-17T07:10:27Z",
       "score": {
         "score": 5.9,
         "subscores": {
@@ -587,8 +920,8 @@
           "distance": 7.0
         },
         "flags": [
-          "CARDIAC_DRIFT",
-          "TOO_FAST"
+          "TOO_FAST",
+          "CARDIAC_DRIFT"
         ],
         "notes": [
           "Passo 4:54 piu veloce del target (5:15).",
@@ -613,7 +946,7 @@
       "avg_pace_fmt": "5:00",
       "calories": 475.0,
       "elevation_gain": 9.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -693,7 +1026,7 @@
       "start_lon": 116.03085248731077,
       "weather_temp": 28,
       "weather_condition": "Nuvoloso",
-      "fetched_at": "2026-08-19T06:00:19Z",
+      "fetched_at": "2026-08-17T07:10:29Z",
       "score": {
         "score": 7.8,
         "subscores": {
@@ -722,7 +1055,7 @@
       "avg_pace_fmt": "4:29",
       "calories": 872.0,
       "elevation_gain": 20.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -856,7 +1189,7 @@
       "start_lon": 116.02828217670321,
       "weather_temp": 30,
       "weather_condition": "Nuvoloso",
-      "fetched_at": "2026-08-19T06:00:21Z",
+      "fetched_at": "2026-08-17T07:10:31Z",
       "score": {
         "score": 5.7,
         "subscores": {
@@ -865,8 +1198,8 @@
           "distance": 7.0
         },
         "flags": [
-          "CARDIAC_DRIFT",
-          "TOO_FAST"
+          "TOO_FAST",
+          "CARDIAC_DRIFT"
         ],
         "notes": [
           "Passo 4:30 piu veloce del target (5:15).",
@@ -908,7 +1241,7 @@
       "start_lon": 120.27892439626157,
       "weather_temp": 27,
       "weather_condition": "Sereno",
-      "fetched_at": "2026-08-19T06:00:31Z",
+      "fetched_at": "2026-08-17T07:10:33Z",
       "score": {
         "score": 7.1,
         "subscores": {
@@ -941,7 +1274,7 @@
       "avg_pace_fmt": "5:14",
       "calories": 370.0,
       "elevation_gain": 126.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -1003,7 +1336,7 @@
       "start_lon": 119.88282725214958,
       "weather_temp": 28,
       "weather_condition": "Pioviggine leggera",
-      "fetched_at": "2026-08-19T06:00:33Z",
+      "fetched_at": "2026-08-17T07:10:35Z",
       "score": {
         "score": 8.7,
         "subscores": {
@@ -1032,7 +1365,7 @@
       "avg_pace_fmt": "5:32",
       "calories": 1007.0,
       "elevation_gain": null,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -1166,7 +1499,7 @@
       "start_lon": null,
       "weather_temp": 18,
       "weather_condition": "Sereno",
-      "fetched_at": "2026-08-19T06:00:35Z",
+      "fetched_at": "2026-08-17T07:10:55Z",
       "score": null,
       "fc_max_at_date": 205
     },
@@ -1246,7 +1579,7 @@
       "start_lon": 114.7958595212549,
       "weather_temp": 21,
       "weather_condition": "Prevalentemente sereno",
-      "fetched_at": "2026-08-19T06:00:45Z",
+      "fetched_at": "2026-08-17T07:10:59Z",
       "score": {
         "score": 7.7,
         "subscores": {
@@ -1281,7 +1614,7 @@
       "avg_pace_fmt": "5:00",
       "calories": 457.0,
       "elevation_gain": 66.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -1361,7 +1694,7 @@
       "start_lon": 114.7971064131707,
       "weather_temp": 27,
       "weather_condition": "Prevalentemente sereno",
-      "fetched_at": "2026-08-19T06:00:47Z",
+      "fetched_at": "2026-08-17T07:11:10Z",
       "score": {
         "score": 7.9,
         "subscores": {
@@ -1390,7 +1723,7 @@
       "avg_pace_fmt": "5:02",
       "calories": 1330.0,
       "elevation_gain": 49.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -1605,7 +1938,7 @@
       "start_lon": 9.042467884719372,
       "weather_temp": 30,
       "weather_condition": "Nuvoloso",
-      "fetched_at": "2026-08-19T06:00:50Z",
+      "fetched_at": "2026-08-17T07:11:15Z",
       "score": {
         "score": 9.5,
         "subscores": {
@@ -1634,7 +1967,7 @@
       "avg_pace_fmt": "4:48",
       "calories": 1064.0,
       "elevation_gain": 39.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -1813,7 +2146,7 @@
       "start_lon": 9.041679399088025,
       "weather_temp": 25,
       "weather_condition": "Sereno",
-      "fetched_at": "2026-08-19T06:01:00Z",
+      "fetched_at": "2026-08-17T07:11:17Z",
       "score": {
         "score": 7.0,
         "subscores": {
@@ -1847,7 +2180,7 @@
       "avg_pace_fmt": "4:47",
       "calories": 629.0,
       "elevation_gain": 20.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -1954,7 +2287,7 @@
       "start_lon": 9.042481714859605,
       "weather_temp": 31,
       "weather_condition": "Prevalentemente sereno",
-      "fetched_at": "2026-08-19T06:01:02Z",
+      "fetched_at": "2026-08-17T07:11:19Z",
       "score": {
         "score": 7.4,
         "subscores": {
@@ -1989,7 +2322,7 @@
       "avg_pace_fmt": "4:37",
       "calories": 705.0,
       "elevation_gain": 25.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -2177,7 +2510,7 @@
       "start_lon": 9.042489090934396,
       "weather_temp": 28,
       "weather_condition": "Sereno",
-      "fetched_at": "2026-08-19T06:01:13Z",
+      "fetched_at": "2026-08-17T07:11:22Z",
       "score": {
         "score": 7.0,
         "subscores": {
@@ -2209,7 +2542,7 @@
       "avg_pace_fmt": "4:44",
       "calories": 1556.0,
       "elevation_gain": 72.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -2459,8 +2792,8 @@
       "start_lat": 45.60064642690122,
       "start_lon": 9.042469058185816,
       "weather_temp": 32,
-      "weather_condition": "Sereno",
-      "fetched_at": "2026-07-21T06:00:13Z",
+      "weather_condition": "Prevalentemente sereno",
+      "fetched_at": "2026-08-17T07:11:24Z",
       "score": {
         "score": 8.0,
         "subscores": {
@@ -2469,8 +2802,8 @@
           "distance": 10
         },
         "flags": [
-          "CARDIAC_DRIFT",
-          "TOO_FAST"
+          "TOO_FAST",
+          "CARDIAC_DRIFT"
         ],
         "notes": [
           "Passo 4:45 piu veloce del target (5:05).",
@@ -2495,7 +2828,7 @@
       "avg_pace_fmt": "5:14",
       "calories": 654.0,
       "elevation_gain": 24.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -2602,7 +2935,7 @@
       "start_lon": 9.042521193623543,
       "weather_temp": 30,
       "weather_condition": "Parzialmente nuvoloso",
-      "fetched_at": "2026-07-21T06:00:16Z",
+      "fetched_at": "2026-07-19T07:45:11Z",
       "score": {
         "score": 10.0,
         "subscores": {
@@ -2631,7 +2964,7 @@
       "avg_pace_fmt": "5:25",
       "calories": 530.0,
       "elevation_gain": 28.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -2720,7 +3053,7 @@
       "start_lon": 9.042534939944744,
       "weather_temp": 32,
       "weather_condition": "Sereno",
-      "fetched_at": "2026-07-21T06:00:18Z",
+      "fetched_at": "2026-07-19T07:45:13Z",
       "score": {
         "score": 10.0,
         "subscores": {
@@ -2749,7 +3082,7 @@
       "avg_pace_fmt": "4:42",
       "calories": 893.0,
       "elevation_gain": 26.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -2901,7 +3234,7 @@
       "start_lon": 9.042443493381143,
       "weather_temp": 32,
       "weather_condition": "Parzialmente nuvoloso",
-      "fetched_at": "2026-07-21T06:00:20Z",
+      "fetched_at": "2026-07-17T09:41:45Z",
       "score": {
         "score": 7.2,
         "subscores": {
@@ -2912,8 +3245,8 @@
           "distance": 10
         },
         "flags": [
-          "MISSING_COOLDOWN",
-          "MISSING_WARMUP"
+          "MISSING_WARMUP",
+          "MISSING_COOLDOWN"
         ],
         "notes": [
           "Warm-up assente o molto breve.",
@@ -2939,7 +3272,7 @@
       "avg_pace_fmt": "5:10",
       "calories": 721.0,
       "elevation_gain": 30.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -3062,9 +3395,9 @@
       ],
       "start_lat": 45.60054140165448,
       "start_lon": 9.04244827106595,
-      "weather_temp": 26,
-      "weather_condition": "Prevalentemente sereno",
-      "fetched_at": "2026-07-21T06:00:22Z",
+      "weather_temp": 24,
+      "weather_condition": "Sereno",
+      "fetched_at": "2026-07-15T22:33:27Z",
       "score": {
         "score": 10.0,
         "subscores": {
@@ -3093,7 +3426,7 @@
       "avg_pace_fmt": "4:37",
       "calories": 765.0,
       "elevation_gain": 31.0,
-      "gear_name": "adidas Adizero EVO SL",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -3252,9 +3585,9 @@
       ],
       "start_lat": 45.600272342562675,
       "start_lon": 9.042482301592827,
-      "weather_temp": 24,
-      "weather_condition": "Parzialmente nuvoloso",
-      "fetched_at": "2026-07-21T06:00:24Z",
+      "weather_temp": 25,
+      "weather_condition": "Nuvoloso",
+      "fetched_at": "2026-07-14T08:12:23Z",
       "score": {
         "score": 9.3,
         "subscores": {
@@ -3286,7 +3619,7 @@
       "avg_pace_fmt": "5:08",
       "calories": 1582.0,
       "elevation_gain": 41.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -3537,7 +3870,7 @@
       "start_lon": 9.041827088221908,
       "weather_temp": 33,
       "weather_condition": "Sereno",
-      "fetched_at": "2026-07-13T06:00:16Z",
+      "fetched_at": "2026-07-14T08:12:25Z",
       "score": {
         "score": 10.0,
         "subscores": {
@@ -3566,7 +3899,7 @@
       "avg_pace_fmt": "5:12",
       "calories": 731.0,
       "elevation_gain": 21.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -3691,7 +4024,7 @@
       "start_lon": 9.042895026504993,
       "weather_temp": 25,
       "weather_condition": "Prevalentemente sereno",
-      "fetched_at": "2026-07-12T06:00:15Z",
+      "fetched_at": "2026-07-11T08:13:55Z",
       "score": {
         "score": 10.0,
         "subscores": {
@@ -3720,7 +4053,7 @@
       "avg_pace_fmt": "5:28",
       "calories": 509.0,
       "elevation_gain": 27.0,
-      "gear_name": "Nike Vomero",
+      "gear_name": null,
       "gear_km": null,
       "laps": [
         {
@@ -3809,7 +4142,7 @@
       "start_lon": 9.04248682782054,
       "weather_temp": 33,
       "weather_condition": "Nuvoloso",
-      "fetched_at": "2026-07-12T06:00:17Z",
+      "fetched_at": "2026-07-10T21:32:25Z",
       "score": {
         "score": 9.7,
         "subscores": {
