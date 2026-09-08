@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-08T21:34:00Z",
+  "last_updated": "2026-09-08T21:38:41Z",
   "activities": [
     {
       "garmin_id": 24280314444,
@@ -897,7 +897,8 @@
         "cap_applied": null,
         "scoring_version": 9
       },
-      "fc_max_at_date": 199
+      "fc_max_at_date": 199,
+      "sweat_loss_ml": 1136
     },
     {
       "garmin_id": 24263627785,
@@ -1814,7 +1815,8 @@
         "cap_applied": null,
         "scoring_version": 9
       },
-      "fc_max_at_date": 199
+      "fc_max_at_date": 199,
+      "sweat_loss_ml": 1804
     },
     {
       "garmin_id": 24250728196,
@@ -2703,7 +2705,8 @@
         "cap_applied": null,
         "scoring_version": 9
       },
-      "fc_max_at_date": 199
+      "fc_max_at_date": 199,
+      "sweat_loss_ml": 797
     },
     {
       "garmin_id": 24238448036,
@@ -3388,7 +3391,8 @@
       },
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
-      "training_effect_aerobic": 3.0
+      "training_effect_aerobic": 3.0,
+      "sweat_loss_ml": 778
     },
     {
       "garmin_id": 24226960302,
@@ -4228,7 +4232,8 @@
       "avg_cadence": 175,
       "training_effect_anaerobic": 0.0,
       "max_hr": 187,
-      "training_effect_aerobic": 4.800000190734863
+      "training_effect_aerobic": 4.800000190734863,
+      "sweat_loss_ml": 1116
     },
     {
       "garmin_id": 24214349030,
@@ -4989,7 +4994,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 175,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 1042
     },
     {
       "garmin_id": 24185055953,
@@ -5739,7 +5745,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 173,
-      "training_effect_aerobic": 3.799999952316284
+      "training_effect_aerobic": 3.799999952316284,
+      "sweat_loss_ml": 840
     },
     {
       "garmin_id": 24106168980,
@@ -6486,7 +6493,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 179,
-      "training_effect_aerobic": 3.5
+      "training_effect_aerobic": 3.5,
+      "sweat_loss_ml": 886
     },
     {
       "garmin_id": 24064827199,
@@ -7367,7 +7375,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 158,
-      "training_effect_aerobic": 3.799999952316284
+      "training_effect_aerobic": 3.799999952316284,
+      "sweat_loss_ml": 1539
     },
     {
       "garmin_id": 24052413516,
@@ -7985,7 +7994,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 154,
-      "training_effect_aerobic": 2.9000000953674316
+      "training_effect_aerobic": 2.9000000953674316,
+      "sweat_loss_ml": 816
     },
     {
       "garmin_id": 24032984347,
@@ -8719,7 +8729,8 @@
       "avg_cadence": 175,
       "training_effect_anaerobic": 0.0,
       "max_hr": 192,
-      "training_effect_aerobic": 4.5
+      "training_effect_aerobic": 4.5,
+      "sweat_loss_ml": 848
     },
     {
       "garmin_id": 24025848926,
@@ -9504,7 +9515,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.10000000149011612,
       "max_hr": 172,
-      "training_effect_aerobic": 3.5999999046325684
+      "training_effect_aerobic": 3.5999999046325684,
+      "sweat_loss_ml": 812
     },
     {
       "garmin_id": 24000960799,
@@ -10333,7 +10345,8 @@
       "avg_cadence": 169,
       "training_effect_anaerobic": 0.0,
       "max_hr": 188,
-      "training_effect_aerobic": 4.5
+      "training_effect_aerobic": 4.5,
+      "sweat_loss_ml": 1006
     },
     {
       "garmin_id": 23921149011,
@@ -10960,7 +10973,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 164,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 657
     },
     {
       "garmin_id": 23908403533,
@@ -11727,7 +11741,8 @@
       "avg_cadence": 174,
       "training_effect_anaerobic": 2.0,
       "max_hr": 194,
-      "training_effect_aerobic": 5.0
+      "training_effect_aerobic": 5.0,
+      "sweat_loss_ml": 1039
     },
     {
       "garmin_id": 23883564013,
@@ -12059,7 +12074,8 @@
       "avg_cadence": 175,
       "training_effect_anaerobic": 0.0,
       "max_hr": 167,
-      "training_effect_aerobic": 0.5
+      "training_effect_aerobic": 0.5,
+      "sweat_loss_ml": 18
     },
     {
       "garmin_id": 23858767462,
@@ -12659,7 +12675,8 @@
       "avg_cadence": 168,
       "training_effect_anaerobic": 0.10000000149011612,
       "max_hr": 185,
-      "training_effect_aerobic": 3.0999999046325684
+      "training_effect_aerobic": 3.0999999046325684,
+      "sweat_loss_ml": 479
     },
     {
       "garmin_id": 23830384650,
@@ -12891,7 +12908,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 1.7000000476837158,
       "max_hr": 183,
-      "training_effect_aerobic": 4.800000190734863
+      "training_effect_aerobic": 4.800000190734863,
+      "sweat_loss_ml": 1250
     },
     {
       "garmin_id": 23817833192,
@@ -13400,7 +13418,8 @@
       "avg_cadence": 180,
       "training_effect_anaerobic": 0.0,
       "max_hr": 165,
-      "training_effect_aerobic": 2.700000047683716
+      "training_effect_aerobic": 2.700000047683716,
+      "sweat_loss_ml": 487
     },
     {
       "garmin_id": 23809705404,
@@ -13971,7 +13990,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.10000000149011612,
       "max_hr": 184,
-      "training_effect_aerobic": 3.4000000953674316
+      "training_effect_aerobic": 3.4000000953674316,
+      "sweat_loss_ml": 591
     },
     {
       "garmin_id": 23731777071,
@@ -14928,7 +14948,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.10000000149011612,
       "max_hr": 165,
-      "training_effect_aerobic": 4.099999904632568
+      "training_effect_aerobic": 4.099999904632568,
+      "sweat_loss_ml": 1851
     },
     {
       "garmin_id": 23712875361,
@@ -15842,7 +15863,8 @@
       "avg_cadence": 176,
       "training_effect_anaerobic": 0.0,
       "max_hr": 169,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 1444
     },
     {
       "garmin_id": 23705518113,
@@ -16634,7 +16656,8 @@
       "avg_cadence": 175,
       "training_effect_anaerobic": 0.0,
       "max_hr": 172,
-      "training_effect_aerobic": 3.700000047683716
+      "training_effect_aerobic": 3.700000047683716,
+      "sweat_loss_ml": 816
     },
     {
       "garmin_id": 23682308183,
@@ -17537,7 +17560,8 @@
       "avg_cadence": 176,
       "training_effect_anaerobic": 0.0,
       "max_hr": 184,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 919
     },
     {
       "garmin_id": 23658409523,
@@ -18541,7 +18565,8 @@
       "avg_cadence": 176,
       "training_effect_anaerobic": 0.10000000149011612,
       "max_hr": 187,
-      "training_effect_aerobic": 4.699999809265137
+      "training_effect_aerobic": 4.699999809265137,
+      "sweat_loss_ml": 2057
     },
     {
       "garmin_id": 23646246428,
@@ -19290,7 +19315,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.0,
       "max_hr": 164,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 936
     },
     {
       "garmin_id": 23632562916,
@@ -19975,7 +20001,8 @@
       "avg_cadence": 174,
       "training_effect_anaerobic": 0.0,
       "max_hr": 162,
-      "training_effect_aerobic": 2.9000000953674316
+      "training_effect_aerobic": 2.9000000953674316,
+      "sweat_loss_ml": 784
     },
     {
       "garmin_id": 23622852566,
@@ -20795,7 +20822,8 @@
       "avg_cadence": 175,
       "training_effect_anaerobic": 0.10000000149011612,
       "max_hr": 175,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 1176
     },
     {
       "garmin_id": 23603306960,
@@ -21568,7 +21596,8 @@
       "avg_cadence": 177,
       "training_effect_anaerobic": 0.0,
       "max_hr": 161,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 1037
     },
     {
       "garmin_id": 23590252613,
@@ -22409,7 +22438,8 @@
       "avg_cadence": 178,
       "training_effect_anaerobic": 0.0,
       "max_hr": 181,
-      "training_effect_aerobic": 4.099999904632568
+      "training_effect_aerobic": 4.099999904632568,
+      "sweat_loss_ml": 1003
     },
     {
       "garmin_id": 23574951296,
@@ -23430,7 +23460,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 169,
-      "training_effect_aerobic": 4.300000190734863
+      "training_effect_aerobic": 4.300000190734863,
+      "sweat_loss_ml": 2226
     },
     {
       "garmin_id": 23554779475,
@@ -24195,7 +24226,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.0,
       "max_hr": 165,
-      "training_effect_aerobic": 3.299999952316284
+      "training_effect_aerobic": 3.299999952316284,
+      "sweat_loss_ml": 1042
     },
     {
       "garmin_id": 23550287571,
@@ -24916,7 +24948,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 166,
-      "training_effect_aerobic": 2.9000000953674316
+      "training_effect_aerobic": 2.9000000953674316,
+      "sweat_loss_ml": 742
     },
     {
       "garmin_id": 23532319820,
@@ -25708,7 +25741,8 @@
       "avg_cadence": 175,
       "training_effect_anaerobic": 0.0,
       "max_hr": 177,
-      "training_effect_aerobic": 4.199999809265137
+      "training_effect_aerobic": 4.199999809265137,
+      "sweat_loss_ml": 1283
     },
     {
       "garmin_id": 23527256728,
@@ -26453,7 +26487,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 163,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 1045
     },
     {
       "garmin_id": 23507055302,
@@ -27322,7 +27357,8 @@
       "avg_cadence": 175,
       "training_effect_anaerobic": 0.0,
       "max_hr": 188,
-      "training_effect_aerobic": 3.9000000953674316
+      "training_effect_aerobic": 3.9000000953674316,
+      "sweat_loss_ml": 962
     },
     {
       "garmin_id": 23485085064,
@@ -28320,7 +28356,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.0,
       "max_hr": 184,
-      "training_effect_aerobic": 4.300000190734863
+      "training_effect_aerobic": 4.300000190734863,
+      "sweat_loss_ml": 1980
     },
     {
       "garmin_id": 23472618262,
@@ -29069,7 +29106,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.0,
       "max_hr": 162,
-      "training_effect_aerobic": 3.0999999046325684
+      "training_effect_aerobic": 3.0999999046325684,
+      "sweat_loss_ml": 925
     },
     {
       "garmin_id": 23468003915,
@@ -29747,7 +29785,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 173,
-      "training_effect_aerobic": 2.9000000953674316
+      "training_effect_aerobic": 2.9000000953674316,
+      "sweat_loss_ml": 718
     },
     {
       "garmin_id": 23450429023,
@@ -30608,7 +30647,8 @@
       "avg_cadence": 176,
       "training_effect_anaerobic": 0.0,
       "max_hr": 174,
-      "training_effect_aerobic": 3.9000000953674316
+      "training_effect_aerobic": 3.9000000953674316,
+      "sweat_loss_ml": 1172
     },
     {
       "garmin_id": 23438993947,
@@ -31377,7 +31417,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.0,
       "max_hr": 168,
-      "training_effect_aerobic": 3.299999952316284
+      "training_effect_aerobic": 3.299999952316284,
+      "sweat_loss_ml": 1042
     },
     {
       "garmin_id": 23428667459,
@@ -32070,7 +32111,8 @@
       "avg_cadence": 176,
       "training_effect_anaerobic": 0.0,
       "max_hr": 190,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 852
     },
     {
       "garmin_id": 23404615259,
@@ -33039,7 +33081,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.20000000298023224,
       "max_hr": 169,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 2028
     },
     {
       "garmin_id": 23398847832,
@@ -33690,7 +33733,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 168,
-      "training_effect_aerobic": 3.0
+      "training_effect_aerobic": 3.0,
+      "sweat_loss_ml": 798
     },
     {
       "garmin_id": 23388224816,
@@ -34479,7 +34523,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 179,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 1127
     },
     {
       "garmin_id": 23377653645,
@@ -35199,7 +35244,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 177,
-      "training_effect_aerobic": 3.299999952316284
+      "training_effect_aerobic": 3.299999952316284,
+      "sweat_loss_ml": 871
     },
     {
       "garmin_id": 23368290911,
@@ -35995,7 +36041,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 177,
-      "training_effect_aerobic": 3.4000000953674316
+      "training_effect_aerobic": 3.4000000953674316,
+      "sweat_loss_ml": 945
     },
     {
       "garmin_id": 23347993887,
@@ -36868,7 +36915,8 @@
       "avg_cadence": 175,
       "training_effect_anaerobic": 0.20000000298023224,
       "max_hr": 184,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 1035
     },
     {
       "garmin_id": 23332852626,
@@ -37739,7 +37787,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 178,
-      "training_effect_aerobic": 4.199999809265137
+      "training_effect_aerobic": 4.199999809265137,
+      "sweat_loss_ml": 1586
     },
     {
       "garmin_id": 23320431519,
@@ -38444,7 +38493,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 177,
-      "training_effect_aerobic": 2.9000000953674316
+      "training_effect_aerobic": 2.9000000953674316,
+      "sweat_loss_ml": 771
     },
     {
       "garmin_id": 23309990711,
@@ -39057,7 +39107,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 163,
-      "training_effect_aerobic": 3.0
+      "training_effect_aerobic": 3.0,
+      "sweat_loss_ml": 881
     },
     {
       "garmin_id": 23299150853,
@@ -39731,7 +39782,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 2.799999952316284,
       "max_hr": 205,
-      "training_effect_aerobic": 4.699999809265137
+      "training_effect_aerobic": 4.699999809265137,
+      "sweat_loss_ml": 792
     },
     {
       "garmin_id": 23287087159,
@@ -40348,7 +40400,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 154,
-      "training_effect_aerobic": 2.9000000953674316
+      "training_effect_aerobic": 2.9000000953674316,
+      "sweat_loss_ml": 771
     },
     {
       "garmin_id": 23275187302,
@@ -41105,7 +41158,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 169,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 910
     },
     {
       "garmin_id": 23251308005,
@@ -41991,7 +42045,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.0,
       "max_hr": 167,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 1836
     },
     {
       "garmin_id": 23238630514,
@@ -42728,7 +42783,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 160,
-      "training_effect_aerobic": 3.0
+      "training_effect_aerobic": 3.0,
+      "sweat_loss_ml": 954
     },
     {
       "garmin_id": 23221550220,
@@ -43437,7 +43493,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 168,
-      "training_effect_aerobic": 3.0
+      "training_effect_aerobic": 3.0,
+      "sweat_loss_ml": 710
     },
     {
       "garmin_id": 23216464454,
@@ -44256,7 +44313,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.0,
       "max_hr": 172,
-      "training_effect_aerobic": 3.9000000953674316
+      "training_effect_aerobic": 3.9000000953674316,
+      "sweat_loss_ml": 1097
     },
     {
       "garmin_id": 23203957625,
@@ -45001,7 +45059,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 158,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 913
     },
     {
       "garmin_id": 23192078158,
@@ -45762,7 +45821,8 @@
       "avg_cadence": 174,
       "training_effect_anaerobic": 0.0,
       "max_hr": 182,
-      "training_effect_aerobic": 3.9000000953674316
+      "training_effect_aerobic": 3.9000000953674316,
+      "sweat_loss_ml": 767
     },
     {
       "garmin_id": 23169092602,
@@ -46693,7 +46753,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 158,
-      "training_effect_aerobic": 3.799999952316284
+      "training_effect_aerobic": 3.799999952316284,
+      "sweat_loss_ml": 1916
     },
     {
       "garmin_id": 23156174061,
@@ -47396,7 +47457,8 @@
       "avg_cadence": 169,
       "training_effect_anaerobic": 0.0,
       "max_hr": 161,
-      "training_effect_aerobic": 3.0999999046325684
+      "training_effect_aerobic": 3.0999999046325684,
+      "sweat_loss_ml": 899
     },
     {
       "garmin_id": 23142891175,
@@ -48147,7 +48209,8 @@
       "avg_cadence": 168,
       "training_effect_anaerobic": 0.0,
       "max_hr": 158,
-      "training_effect_aerobic": 2.700000047683716
+      "training_effect_aerobic": 2.700000047683716,
+      "sweat_loss_ml": 701
     },
     {
       "garmin_id": 23123852312,
@@ -48966,7 +49029,8 @@
       "avg_cadence": 174,
       "training_effect_anaerobic": 0.0,
       "max_hr": 165,
-      "training_effect_aerobic": 3.9000000953674316
+      "training_effect_aerobic": 3.9000000953674316,
+      "sweat_loss_ml": 1393
     },
     {
       "garmin_id": 23119744106,
@@ -49717,7 +49781,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 167,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 848
     },
     {
       "garmin_id": 23108028661,
@@ -50464,7 +50529,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.0,
       "max_hr": 166,
-      "training_effect_aerobic": 3.5
+      "training_effect_aerobic": 3.5,
+      "sweat_loss_ml": 858
     },
     {
       "garmin_id": 23084025466,
@@ -51323,7 +51389,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.20000000298023224,
       "max_hr": 162,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 1691
     },
     {
       "garmin_id": 23072168046,
@@ -52066,7 +52133,8 @@
       "avg_cadence": 169,
       "training_effect_anaerobic": 0.20000000298023224,
       "max_hr": 171,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 927
     },
     {
       "garmin_id": 23059810553,
@@ -52780,7 +52848,8 @@
       "avg_cadence": 169,
       "training_effect_anaerobic": 0.0,
       "max_hr": 150,
-      "training_effect_aerobic": 2.5999999046325684
+      "training_effect_aerobic": 2.5999999046325684,
+      "sweat_loss_ml": 760
     },
     {
       "garmin_id": 23043206188,
@@ -53464,7 +53533,8 @@
       "avg_cadence": 169,
       "training_effect_anaerobic": 0.0,
       "max_hr": 183,
-      "training_effect_aerobic": 3.700000047683716
+      "training_effect_aerobic": 3.700000047683716,
+      "sweat_loss_ml": 1025
     },
     {
       "garmin_id": 23032189739,
@@ -54107,7 +54177,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 176,
-      "training_effect_aerobic": 3.700000047683716
+      "training_effect_aerobic": 3.700000047683716,
+      "sweat_loss_ml": 843
     },
     {
       "garmin_id": 23023745883,
@@ -54908,7 +54979,8 @@
       "avg_cadence": 174,
       "training_effect_anaerobic": 0.8999999761581421,
       "max_hr": 188,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 964
     },
     {
       "garmin_id": 22994742630,
@@ -55794,7 +55866,8 @@
       "avg_cadence": 173,
       "training_effect_anaerobic": 0.0,
       "max_hr": 182,
-      "training_effect_aerobic": 4.800000190734863
+      "training_effect_aerobic": 4.800000190734863,
+      "sweat_loss_ml": 1489
     },
     {
       "garmin_id": 22980701407,
@@ -56534,7 +56607,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 183,
-      "training_effect_aerobic": 4.0
+      "training_effect_aerobic": 4.0,
+      "sweat_loss_ml": 837
     },
     {
       "garmin_id": 22972288317,
@@ -57122,7 +57196,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 174,
-      "training_effect_aerobic": 3.299999952316284
+      "training_effect_aerobic": 3.299999952316284,
+      "sweat_loss_ml": 716
     },
     {
       "garmin_id": 22963569017,
@@ -57922,7 +57997,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 173,
-      "training_effect_aerobic": 3.299999952316284
+      "training_effect_aerobic": 3.299999952316284,
+      "sweat_loss_ml": 813
     },
     {
       "garmin_id": 22951809683,
@@ -58579,7 +58655,8 @@
       "avg_cadence": 183,
       "training_effect_anaerobic": 0.0,
       "max_hr": 160,
-      "training_effect_aerobic": 3.299999952316284
+      "training_effect_aerobic": 3.299999952316284,
+      "sweat_loss_ml": 768
     },
     {
       "garmin_id": 22935210022,
@@ -59297,7 +59374,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 169,
-      "training_effect_aerobic": 3.5999999046325684
+      "training_effect_aerobic": 3.5999999046325684,
+      "sweat_loss_ml": 907
     },
     {
       "garmin_id": 22917283581,
@@ -60096,7 +60174,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 157,
-      "training_effect_aerobic": 3.700000047683716
+      "training_effect_aerobic": 3.700000047683716,
+      "sweat_loss_ml": 1185
     },
     {
       "garmin_id": 22904645423,
@@ -60787,7 +60866,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 163,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 877
     },
     {
       "garmin_id": 22893744848,
@@ -61513,7 +61593,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 170,
-      "training_effect_aerobic": 3.0
+      "training_effect_aerobic": 3.0,
+      "sweat_loss_ml": 521
     },
     {
       "garmin_id": 22882998668,
@@ -62278,7 +62359,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.0,
       "max_hr": 164,
-      "training_effect_aerobic": 3.4000000953674316
+      "training_effect_aerobic": 3.4000000953674316,
+      "sweat_loss_ml": 741
     },
     {
       "garmin_id": 22863752396,
@@ -62861,7 +62943,8 @@
       "avg_cadence": 175,
       "training_effect_anaerobic": 0.0,
       "max_hr": 158,
-      "training_effect_aerobic": 3.0999999046325684
+      "training_effect_aerobic": 3.0999999046325684,
+      "sweat_loss_ml": 642
     },
     {
       "garmin_id": 22853108541,
@@ -63609,7 +63692,8 @@
       "avg_cadence": 170,
       "training_effect_anaerobic": 0.0,
       "max_hr": 171,
-      "training_effect_aerobic": 3.700000047683716
+      "training_effect_aerobic": 3.700000047683716,
+      "sweat_loss_ml": 800
     },
     {
       "garmin_id": 22836842493,
@@ -64419,7 +64503,8 @@
       "avg_cadence": 168,
       "training_effect_anaerobic": 0.0,
       "max_hr": 166,
-      "training_effect_aerobic": 3.5999999046325684
+      "training_effect_aerobic": 3.5999999046325684,
+      "sweat_loss_ml": 1039
     },
     {
       "garmin_id": 22825259463,
@@ -65189,7 +65274,8 @@
       "avg_cadence": 169,
       "training_effect_anaerobic": 0.0,
       "max_hr": 167,
-      "training_effect_aerobic": 3.4000000953674316
+      "training_effect_aerobic": 3.4000000953674316,
+      "sweat_loss_ml": 916
     },
     {
       "garmin_id": 22800958040,
@@ -65823,7 +65909,8 @@
       "avg_cadence": 174,
       "training_effect_anaerobic": 0.0,
       "max_hr": 153,
-      "training_effect_aerobic": 2.700000047683716
+      "training_effect_aerobic": 2.700000047683716,
+      "sweat_loss_ml": 572
     },
     {
       "garmin_id": 22789594427,
@@ -66652,7 +66739,8 @@
       "avg_cadence": 172,
       "training_effect_anaerobic": 0.20000000298023224,
       "max_hr": 156,
-      "training_effect_aerobic": 3.200000047683716
+      "training_effect_aerobic": 3.200000047683716,
+      "sweat_loss_ml": 905
     },
     {
       "garmin_id": 22770609208,
@@ -67372,7 +67460,8 @@
       "avg_cadence": 179,
       "training_effect_anaerobic": 0.10000000149011612,
       "max_hr": 186,
-      "training_effect_aerobic": 3.799999952316284
+      "training_effect_aerobic": 3.799999952316284,
+      "sweat_loss_ml": 682
     },
     {
       "garmin_id": 22753305099,
@@ -68146,7 +68235,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 182,
-      "training_effect_aerobic": 3.799999952316284
+      "training_effect_aerobic": 3.799999952316284,
+      "sweat_loss_ml": 745
     },
     {
       "garmin_id": 22735939665,
@@ -68926,7 +69016,8 @@
       "avg_cadence": 171,
       "training_effect_anaerobic": 0.0,
       "max_hr": 173,
-      "training_effect_aerobic": 3.4000000953674316
+      "training_effect_aerobic": 3.4000000953674316,
+      "sweat_loss_ml": 903
     },
     {
       "garmin_id": 22729308568,
@@ -69698,7 +69789,8 @@
       "avg_cadence": 169,
       "training_effect_anaerobic": 0.0,
       "max_hr": 169,
-      "training_effect_aerobic": 3.5
+      "training_effect_aerobic": 3.5,
+      "sweat_loss_ml": 863
     },
     {
       "garmin_id": 22704300855,
@@ -70309,7 +70401,8 @@
       "avg_cadence": 166,
       "training_effect_anaerobic": 0.0,
       "max_hr": 163,
-      "training_effect_aerobic": 3.0
+      "training_effect_aerobic": 3.0,
+      "sweat_loss_ml": 583
     },
     {
       "garmin_id": 22694501795,
@@ -70951,7 +71044,8 @@
       "avg_cadence": 166,
       "training_effect_anaerobic": 0.0,
       "max_hr": 176,
-      "training_effect_aerobic": 3.0
+      "training_effect_aerobic": 3.0,
+      "sweat_loss_ml": 635
     },
     {
       "garmin_id": 22662064953,
@@ -71592,7 +71686,8 @@
       "avg_cadence": 169,
       "training_effect_anaerobic": 0.0,
       "max_hr": 150,
-      "training_effect_aerobic": 2.5999999046325684
+      "training_effect_aerobic": 2.5999999046325684,
+      "sweat_loss_ml": 452
     },
     {
       "garmin_id": 22646265581,
@@ -72183,7 +72278,8 @@
       "avg_cadence": 165,
       "training_effect_anaerobic": 0.10000000149011612,
       "max_hr": 148,
-      "training_effect_aerobic": 2.299999952316284
+      "training_effect_aerobic": 2.299999952316284,
+      "sweat_loss_ml": 472
     },
     {
       "garmin_id": 22633929850,
@@ -72849,7 +72945,8 @@
       "avg_cadence": 166,
       "training_effect_anaerobic": 0.0,
       "max_hr": 160,
-      "training_effect_aerobic": 2.5
+      "training_effect_aerobic": 2.5,
+      "sweat_loss_ml": 471
     },
     {
       "garmin_id": 22580585917,
@@ -74075,7 +74172,8 @@
       "avg_cadence": 179,
       "training_effect_anaerobic": 2.0999999046325684,
       "max_hr": 190,
-      "training_effect_aerobic": 5.0
+      "training_effect_aerobic": 5.0,
+      "sweat_loss_ml": 3200
     },
     {
       "garmin_id": 22562769777,
@@ -74774,7 +74872,8 @@
       "avg_cadence": 169,
       "training_effect_anaerobic": 0.0,
       "max_hr": 149,
-      "training_effect_aerobic": 2.299999952316284
+      "training_effect_aerobic": 2.299999952316284,
+      "sweat_loss_ml": 548
     }
   ],
   "hr_history": [
