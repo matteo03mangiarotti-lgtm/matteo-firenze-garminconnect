@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-20T07:22:58Z",
+  "last_updated": "2026-10-20T07:41:22Z",
   "activities": [
     {
       "garmin_id": 24783327644,
@@ -1740,7 +1740,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 197
     },
@@ -2478,7 +2478,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 197
     },
@@ -3403,7 +3403,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 197
     },
@@ -4445,7 +4445,7 @@
           "Passo 4:43 piu veloce del target (5:10)."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 197
     },
@@ -5123,7 +5123,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 197
     },
@@ -5933,7 +5933,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 197
     },
@@ -6784,24 +6784,22 @@
       "weather_condition": "Pioggia leggera",
       "fetched_at": "2026-10-07T10:42:17Z",
       "score": {
-        "score": 3.9,
+        "score": 5.8,
         "subscores": {
-          "fast_blocks": 1.52,
-          "structure": 6.0,
-          "wu_cd": 6.0,
-          "hr": 5.45,
+          "fast_blocks": 3.31,
+          "structure": 10.0,
+          "wu_cd": 10.0,
+          "hr": 4.75,
           "distance": 10
         },
         "flags": [
-          "MISSING_WARMUP",
           "HR_HIGH"
         ],
         "notes": [
-          "FC media 174 bpm supera il target di 13 bpm.",
-          "Warm-up assente o molto breve."
+          "FC media 174 bpm supera il target di 15 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 197
     },
@@ -7511,7 +7509,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -8593,7 +8591,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -9343,7 +9341,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -10011,7 +10009,7 @@
           "Passo 5:05 piu veloce del target (5:25)."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -10797,8 +10795,8 @@
           "distance": 10
         },
         "flags": [
-          "MISSING_COOLDOWN",
-          "MISSING_WARMUP"
+          "MISSING_WARMUP",
+          "MISSING_COOLDOWN"
         ],
         "notes": [
           "Warm-up assente o molto breve.",
@@ -10806,7 +10804,7 @@
           "Cap: Qualita: warm-up e cooldown assenti (previsti nel piano)."
         ],
         "cap_applied": "Qualita: warm-up e cooldown assenti (previsti nel piano)",
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -11496,7 +11494,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -12214,7 +12212,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -13214,7 +13212,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -13916,7 +13914,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -14578,7 +14576,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -15407,7 +15405,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -16137,7 +16135,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -17213,7 +17211,7 @@
           "Deriva cardiaca elevata (14 bpm)."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -17947,7 +17945,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -18810,7 +18808,7 @@
           "Cap: Recovery corsa troppo veloce."
         ],
         "cap_applied": "Recovery corsa troppo veloce",
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -19504,7 +19502,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -20365,7 +20363,7 @@
           "FC 167 bpm sotto target di 8 bpm — controlla le soglie."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -21357,7 +21355,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -22015,7 +22013,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -22800,24 +22798,16 @@
       "weather_condition": "Parzialmente nuvoloso",
       "fetched_at": "2026-09-10T23:41:18Z",
       "score": {
-        "score": 5.5,
+        "score": 6.5,
         "subscores": {
           "fast_blocks": 5.19,
-          "structure": 2.5,
-          "wu_cd": 2.5,
           "hr": 10.0,
           "distance": 10
         },
-        "flags": [
-          "MISSING_COOLDOWN",
-          "MISSING_WARMUP"
-        ],
-        "notes": [
-          "Warm-up assente o molto breve.",
-          "Cooldown assente o molto breve."
-        ],
+        "flags": [],
+        "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -23575,7 +23565,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199
     },
@@ -24473,7 +24463,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199,
       "sweat_loss_ml": 1136
@@ -25391,7 +25381,7 @@
           "Deriva cardiaca elevata (15 bpm)."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199,
       "sweat_loss_ml": 1804
@@ -26281,7 +26271,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199,
       "sweat_loss_ml": 797
@@ -26446,7 +26436,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 199,
       "gps_polyline": [
@@ -27217,7 +27207,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -28028,7 +28018,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -30373,7 +30363,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -31129,7 +31119,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -31821,7 +31811,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -32497,7 +32487,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -33309,15 +33299,15 @@
           "distance": 7.0
         },
         "flags": [
-          "CARDIAC_DRIFT",
-          "TOO_FAST"
+          "TOO_FAST",
+          "CARDIAC_DRIFT"
         ],
         "notes": [
           "Passo 4:54 piu veloce del target (5:15).",
           "Deriva cardiaca elevata (17 bpm)."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -34071,7 +34061,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -34781,15 +34771,15 @@
           "distance": 7.0
         },
         "flags": [
-          "CARDIAC_DRIFT",
-          "TOO_FAST"
+          "TOO_FAST",
+          "CARDIAC_DRIFT"
         ],
         "notes": [
           "Passo 4:30 piu veloce del target (5:15).",
           "Deriva cardiaca elevata (25 bpm)."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -35373,7 +35363,7 @@
           "Passo 4:47 piu veloce del target (5:15)."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -35772,7 +35762,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -36604,15 +36594,15 @@
           "distance": 7.0
         },
         "flags": [
-          "CARDIAC_DRIFT",
-          "HR_LOW"
+          "HR_LOW",
+          "CARDIAC_DRIFT"
         ],
         "notes": [
           "FC 145 bpm sotto target di 7 bpm — controlla le soglie.",
           "Deriva cardiaca elevata (13 bpm)."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -37144,7 +37134,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -37926,7 +37916,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -38833,7 +38823,7 @@
           "Cap: Recovery corsa troppo veloce."
         ],
         "cap_applied": "Recovery corsa troppo veloce",
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -39637,7 +39627,7 @@
           "Cooldown assente o molto breve."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -40553,7 +40543,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -41550,15 +41540,15 @@
           "distance": 10
         },
         "flags": [
-          "CARDIAC_DRIFT",
-          "TOO_FAST"
+          "TOO_FAST",
+          "CARDIAC_DRIFT"
         ],
         "notes": [
           "Passo 4:45 piu veloce del target (5:05).",
           "Deriva cardiaca di 11 bpm nella seconda meta."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -42333,7 +42323,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -43055,7 +43045,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -43839,8 +43829,8 @@
           "distance": 10
         },
         "flags": [
-          "MISSING_COOLDOWN",
-          "MISSING_WARMUP"
+          "MISSING_WARMUP",
+          "MISSING_COOLDOWN"
         ],
         "notes": [
           "Warm-up assente o molto breve.",
@@ -43848,7 +43838,7 @@
           "Cap: Qualita: warm-up e cooldown assenti (previsti nel piano)."
         ],
         "cap_applied": "Qualita: warm-up e cooldown assenti (previsti nel piano)",
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -44618,7 +44608,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -45451,7 +45441,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -46430,7 +46420,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -47256,7 +47246,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -47966,7 +47956,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -48802,7 +48792,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -49537,7 +49527,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -50342,7 +50332,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -51325,7 +51315,7 @@
           "Deriva cardiaca di 11 bpm nella seconda meta."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -52124,7 +52114,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -52846,7 +52836,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -53623,8 +53613,8 @@
           "distance": 10
         },
         "flags": [
-          "MISSING_COOLDOWN",
-          "MISSING_WARMUP"
+          "MISSING_WARMUP",
+          "MISSING_COOLDOWN"
         ],
         "notes": [
           "Warm-up assente o molto breve.",
@@ -53632,7 +53622,7 @@
           "Cap: Qualita: warm-up e cooldown assenti (previsti nel piano)."
         ],
         "cap_applied": "Qualita: warm-up e cooldown assenti (previsti nel piano)",
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -54443,7 +54433,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -55215,7 +55205,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -56075,7 +56065,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -56835,7 +56825,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -57564,7 +57554,7 @@
           "Cap: Recovery: FC molto sopra il range."
         ],
         "cap_applied": "Recovery: FC molto sopra il range",
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -58291,9 +58281,9 @@
           "distance": 4.27
         },
         "flags": [
-          "MISSING_COOLDOWN",
+          "MISSING_WARMUP",
           "NO_FAST_BLOCKS",
-          "MISSING_WARMUP"
+          "MISSING_COOLDOWN"
         ],
         "notes": [
           "Nessun blocco veloce rilevato.",
@@ -58302,7 +58292,7 @@
           "Cap: Qualita: nessun blocco veloce."
         ],
         "cap_applied": "Qualita: nessun blocco veloce",
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -59026,7 +59016,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -59896,7 +59886,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -60809,7 +60799,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -61527,7 +61517,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -62261,7 +62251,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 205,
       "gps_polyline": [
@@ -62881,7 +62871,7 @@
           "FC media 171 bpm supera il target di 11 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 198,
       "gps_polyline": [
@@ -63522,7 +63512,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 198,
       "gps_polyline": [
@@ -64168,7 +64158,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 198,
       "gps_polyline": [
@@ -65094,7 +65084,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 198,
       "gps_polyline": [
@@ -65813,7 +65803,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 198,
       "gps_polyline": [
@@ -66523,7 +66513,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 198,
       "gps_polyline": [
@@ -67317,8 +67307,8 @@
           "distance": 10
         },
         "flags": [
-          "MISSING_COOLDOWN",
-          "MISSING_WARMUP"
+          "MISSING_WARMUP",
+          "MISSING_COOLDOWN"
         ],
         "notes": [
           "Warm-up assente o molto breve.",
@@ -67326,7 +67316,7 @@
           "Cap: Qualita: warm-up e cooldown assenti (previsti nel piano)."
         ],
         "cap_applied": "Qualita: warm-up e cooldown assenti (previsti nel piano)",
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "fc_max_at_date": 198,
       "gps_polyline": [
@@ -68091,7 +68081,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 17,
       "weather_condition": "Prevalentemente sereno",
@@ -68839,7 +68829,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 15,
       "weather_condition": "Pioviggine leggera",
@@ -69753,7 +69743,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 18,
       "weather_condition": "Nuvoloso",
@@ -70517,7 +70507,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 15,
       "weather_condition": "Pioviggine",
@@ -71193,7 +71183,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 17,
       "weather_condition": "Parzialmente nuvoloso",
@@ -72077,7 +72067,7 @@
           "FC 154 bpm sotto target di 7 bpm — controlla le soglie."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 15,
       "weather_condition": "Nuvoloso",
@@ -72793,7 +72783,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 16,
       "weather_condition": "Pioggia leggera",
@@ -73604,7 +73594,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 18,
       "weather_condition": "Nuvoloso",
@@ -74433,7 +74423,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 20,
       "weather_condition": "Nuvoloso",
@@ -75151,7 +75141,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -75867,7 +75857,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -76638,7 +76628,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -77299,7 +77289,7 @@
           "FC media 166 bpm supera il target di 11 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -78040,7 +78030,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -78851,15 +78841,15 @@
           "distance": 10
         },
         "flags": [
-          "CARDIAC_DRIFT",
-          "HR_HIGH"
+          "HR_HIGH",
+          "CARDIAC_DRIFT"
         ],
         "notes": [
           "FC media 170 bpm supera il target di 10 bpm.",
           "Deriva cardiaca di 8 bpm nella seconda meta."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -79632,7 +79622,7 @@
           "FC media 170 bpm supera il target di 15 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -80346,7 +80336,7 @@
           "Cap: Recovery: FC molto sopra il range."
         ],
         "cap_applied": "Recovery: FC molto sopra il range",
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -81002,7 +80992,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -81745,7 +81735,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -82431,7 +82421,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -83220,7 +83210,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -83936,7 +83926,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -84586,7 +84576,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -85390,12 +85380,11 @@
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
       "score": {
-        "score": 7.9,
+        "score": 7.6,
         "subscores": {
           "fast_blocks": 4.91,
-          "structure": 10.0,
+          "structure": 10,
           "recoveries": 10,
-          "wu_cd": 10.0,
           "hr": 9.12,
           "distance": 10
         },
@@ -85406,7 +85395,7 @@
           "FC 150 bpm sotto target di 11 bpm — controlla le soglie."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "weather_temp": 7,
       "weather_condition": "Parzialmente nuvoloso",
@@ -86093,7 +86082,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -86705,7 +86694,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
@@ -87496,7 +87485,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
@@ -88279,7 +88268,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -88980,7 +88969,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -89741,7 +89730,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -90477,7 +90466,7 @@
           "FC media 173 bpm supera il target di 18 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
@@ -91212,7 +91201,7 @@
           "FC media 170 bpm supera il target di 15 bpm."
         ],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
@@ -91997,7 +91986,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -92806,7 +92795,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -93495,7 +93484,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Nike Vomero plus",
       "gear_km": null,
@@ -94121,7 +94110,7 @@
         "flags": [],
         "notes": [],
         "cap_applied": null,
-        "scoring_version": 9
+        "scoring_version": 10
       },
       "gear_name": "Kiprun KS900 light",
       "gear_km": null,
